@@ -67,7 +67,7 @@
         <!-- <state_interface name="Present Current"/> -->
         <param name="Torque Enable">0</param>
         <param name="Drive Mode">0</param>
-        <param name="Operating Mode">0</param>
+        <param name="Operating Mode">4</param>
         <param name="Return Delay Time">0</param>
       </gpio>
       <gpio name="dxl2">
@@ -79,7 +79,7 @@
         <!-- <state_interface name="Present Current"/> -->
         <param name="Torque Enable">0</param>
         <param name="Drive Mode">0</param>
-        <param name="Operating Mode">0</param>
+        <param name="Operating Mode">4</param>
         <param name="Return Delay Time">0</param>
       </gpio>
 
