@@ -24,8 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'rgb_subscriber = realsense_rgb_compressed.rgb_sub:main',
-            'realsense_rgb_publisher = realsense_rgb_compressed.camera_test:main',
+            'rgb_subscriber = avatar_vision.rgb_sub:main',
+            'realsense_rgb_publisher = avatar_vision.camera_test:main',
         ],
     },
 )
