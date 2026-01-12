@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'avatar_driver'
+package_name = 'avatar_follower'
 
 setup(
     name=package_name,

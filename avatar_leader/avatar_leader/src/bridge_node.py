@@ -7,7 +7,7 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float64
 from sensor_msgs.msg import JointState
-from avatar_control.plugins.filters import LowPassFilter
+from avatar_leader.plugins.filters import LowPassFilter
 
 # 받아올 데이터의 크기 관리
 ADDR_PRESENT_POSITION = 132
