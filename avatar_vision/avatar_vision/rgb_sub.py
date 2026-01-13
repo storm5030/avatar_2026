@@ -1,48 +1,46 @@
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import Image
-
-# OpenCV 관련
-from cv_bridge import CvBridge
+from sensor_msgs.msg import CompressedImage # 메시지 타입 변경
 import cv2
+import numpy as np
 
-
-# Subscriber 노드 생성
-class RealSenseRGBSubscriber(Node):
+class RealSenseCompressedSubscriber(Node):
     def __init__(self):
-        super().__init__('realsense_rgb_subscriber') # 노드 이름
-
-        self.bridge = CvBridge() # 이번엔 ROS Image -> OpenCV 로 바꾸려고
+        super().__init__('realsense_rgb_subscriber')
 
         self.subscription = self.create_subscription(
-            Image,
-            '/realsense/color/image_raw',   # Publisher와 동일
+            CompressedImage, # 타입 변경
+            '/realsense/color/image_raw/compressed', # 토픽 이름 일치
             self.callback,
             10
         )
+        self.get_logger().info('Subscribed to Compressed Image')
 
-        self.get_logger().info(
-            'Subscribed to /realsense/color/image_raw'
-        )
-
-# 구독시 할 일
     def callback(self, msg):
-        # ROS Image → OpenCV 변환
-        frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        # 1. 압축된 바이트 데이터를 numpy 배열로 변환
+        np_arr = np.frombuffer(msg.data, np.uint8)
+        
+        # 2. OpenCV를 이용해 JPEG 압축 해제 (디코딩)
+        frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
 
-        # 영상 화면 띄우기
-        cv2.imshow('RealSense RGB (subscriber)', frame)
-        cv2.waitKey(1)
-
+        if frame is not None:
+            # 영상 화면 띄우기
+            cv2.imshow('Remote View (Compressed)', frame)
+            cv2.waitKey(1)
+        else:
+            self.get_logger().warning('Failed to decode image')
 
 def main(args=None):
     rclpy.init(args=args)
-    node = RealSenseRGBSubscriber()
-    rclpy.spin(node)
-    node.destroy_node()
-    rclpy.shutdown()
-    cv2.destroyAllWindows()
-
+    node = RealSenseCompressedSubscriber()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+        cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     main()
