@@ -9,6 +9,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
+          <box size="0.04 0.04 0.02" />
           <!-- <mesh filename="${meshes_file_direction}/follower_01_base.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
         <material name="grey">
@@ -18,6 +19,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
+          <box size="0.04 0.04 0.02" />
           <!-- <mesh filename="${meshes_file_direction}/follower_01_base.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
         <material name="grey">
@@ -46,6 +48,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
+          <box size="0.04 0.04 0.02" />
           <!-- <mesh filename="${meshes_file_direction}/follower_02_link1.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
         <material name="grey">
@@ -55,6 +58,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
+          <box size="0.04 0.04 0.02" />
           <!-- <mesh filename="${meshes_file_direction}/follower_02_link1.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
         <material name="grey">
@@ -83,6 +87,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
+          <box size="0.04 0.04 0.02" />
           <!-- <mesh filename="${meshes_file_direction}/follower_03_link2.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
         <material name="grey">
@@ -92,6 +97,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
+          <box size="0.04 0.04 0.02" />
           <!-- <mesh filename="${meshes_file_direction}/follower_03_link2.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
         <material name="grey">

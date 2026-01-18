@@ -27,6 +27,7 @@ install(DIRECTORY
   urdf
   meshes
   rviz
+  launch
   ros2_control
   gazebo
   DESTINATION share/${PROJECT_NAME}
