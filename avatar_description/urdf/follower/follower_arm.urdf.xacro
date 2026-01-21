@@ -7,7 +7,7 @@
     <!-- link0 -->
     <link name="${prefix}link0" >
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0 0 0.01" rpy="0 0 0" />
         <geometry>
           <box size="0.04 0.04 0.02" />
           <!-- <mesh filename="${meshes_file_direction}/follower_01_base.stl" scale="0.001 0.001 0.001" /> -->
@@ -17,7 +17,7 @@
         </material>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0 0 0.01" rpy="0 0 0" />
         <geometry>
           <box size="0.04 0.04 0.02" />
           <!-- <mesh filename="${meshes_file_direction}/follower_01_base.stl" scale="0.001 0.001 0.001" /> -->
@@ -46,9 +46,9 @@
     <!-- link1 -->
     <link name="${prefix}link1" >
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0 0 0.05" rpy="0 0 0" />
         <geometry>
-          <box size="0.04 0.04 0.02" />
+          <box size="0.04 0.04 0.10" />
           <!-- <mesh filename="${meshes_file_direction}/follower_02_link1.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
         <material name="grey">
@@ -56,9 +56,9 @@
         </material>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0 0 0.05" rpy="0 0 0" />
         <geometry>
-          <box size="0.04 0.04 0.02" />
+          <box size="0.04 0.04 0.10" />
           <!-- <mesh filename="${meshes_file_direction}/follower_02_link1.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
         <material name="grey">
@@ -85,9 +85,9 @@
     <!-- link2 -->
     <link name="${prefix}link2" >
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0 0 0.05" rpy="0 0 0" />
         <geometry>
-          <box size="0.04 0.04 0.02" />
+          <box size="0.04 0.04 0.10" />
           <!-- <mesh filename="${meshes_file_direction}/follower_03_link2.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
         <material name="grey">
@@ -95,9 +95,9 @@
         </material>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0 0 0.05" rpy="0 0 0" />
         <geometry>
-          <box size="0.04 0.04 0.02" />
+          <box size="0.04 0.04 0.10" />
           <!-- <mesh filename="${meshes_file_direction}/follower_03_link2.stl" scale="0.001 0.001 0.001" /> -->
         </geometry>
         <material name="grey">
