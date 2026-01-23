@@ -281,7 +281,7 @@
       <child link="${prefix}left_link2" />
       <origin xyz="${-robot_thickness/2} 0 0" rpy="0 0 0" />
       <axis xyz="0 1 0" />
-      <limit velocity="4.8" effort="1000" lower="${-pi/2}" upper="${-pi}" />
+      <limit velocity="4.8" effort="1000" lower="${-pi/2}" upper="${pi}" />
       <dynamics damping="0.1" />
     </joint>
 
