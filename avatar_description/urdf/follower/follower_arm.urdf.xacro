@@ -377,6 +377,8 @@
       <parent link="base_link"/>
       <child link="right_link1_1"/>
       <axis xyz="-0.0 -1.0 0.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     <joint name="right_joint2" type="continuous">
@@ -384,6 +386,8 @@
       <parent link="right_link1_1"/>
       <child link="right_link2_1"/>
       <axis xyz="-1.0 -0.0 0.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     <joint name="right_joint3" type="continuous">
@@ -391,13 +395,17 @@
       <parent link="right_link2_1"/>
       <child link="right_link3_1"/>
       <axis xyz="0.0 -0.0 -1.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     <joint name="right_joint4" type="continuous">
       <origin xyz="0.0 -0.019 -0.0315" rpy="0 0 0"/>
       <parent link="right_link3_1"/>
-      <child link="right_link4_1"/>p
+      <child link="right_link4_1"/>
       <axis xyz="0.0 1.0 -0.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     <joint name="right_joint5" type="continuous">
@@ -405,6 +413,8 @@
       <parent link="right_link4_1"/>
       <child link="right_link5_1"/>
       <axis xyz="0.0 0.0 -1.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     <joint name="right_joint6" type="continuous">
@@ -412,6 +422,8 @@
       <parent link="right_link5_1"/>
       <child link="right_link6_1"/>
       <axis xyz="0.0 1.0 0.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     <joint name="right_joint_gripper" type="continuous">
@@ -419,6 +431,8 @@
       <parent link="right_link6_1"/>
       <child link="right_link_gripper_1"/>
       <axis xyz="1.0 -0.0 -0.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
 
@@ -427,6 +441,8 @@
       <parent link="base_link"/>
       <child link="left_link1_1"/>
       <axis xyz="0.0 1.0 0.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     <joint name="left_joint2" type="continuous">
@@ -434,6 +450,8 @@
       <parent link="left_link1_1"/>
       <child link="left_link2_1"/>
       <axis xyz="-1.0 -0.0 -0.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     <joint name="left_joint3" type="continuous">
@@ -441,6 +459,8 @@
       <parent link="left_link2_1"/>
       <child link="left_link3_1"/>
       <axis xyz="0.0 -0.0 -1.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     <joint name="left_joint4" type="continuous">
@@ -448,6 +468,8 @@
       <parent link="left_link3_1"/>
       <child link="left_link4_1"/>
       <axis xyz="-0.0 -1.0 0.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     <joint name="left_joint5" type="continuous">
@@ -455,6 +477,8 @@
       <parent link="left_link4_1"/>
       <child link="left_link5_1"/>
       <axis xyz="0.0 0.0 -1.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     <joint name="left_joint6" type="continuous">
@@ -462,6 +486,8 @@
       <parent link="left_link5_1"/>
       <child link="left_link6_1"/>
       <axis xyz="-0.0 -1.0 -0.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     <joint name="left_joint_gripper" type="continuous">
@@ -469,6 +495,8 @@
       <parent link="left_link6_1"/>
       <child link="left_link_gripper_1"/>
       <axis xyz="1.0 -0.0 -0.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     
@@ -477,6 +505,8 @@
       <parent link="base_link"/>
       <child link="neck_link1_1"/>
       <axis xyz="0.0 1.0 -0.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
     <joint name="neck_joint2" type="continuous">
@@ -484,6 +514,8 @@
       <parent link="neck_link1_1"/>
       <child link="neck_link2_1"/>
       <axis xyz="0.0 0.0 1.0"/>
+      <limit velocity="4.8" effort="1000" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
     </joint>
 
 
