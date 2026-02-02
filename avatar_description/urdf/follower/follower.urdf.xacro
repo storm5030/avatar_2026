@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot name="follower" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
   <xacro:arg name="prefix" default="" />
   <xacro:arg name="use_sim" default="false" />
   <xacro:arg name="use_mock_hardware" default="false" />
@@ -50,3 +51,4 @@
     port_name="$(arg port_name)"/>
 
 </robot>
+

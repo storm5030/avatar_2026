@@ -1,90 +1,100 @@
+import os
 from launch import LaunchDescription
-from launch.actions import TimerAction, ExecuteProcess
+from launch.actions import TimerAction, ExecuteProcess, RegisterEventHandler, SetEnvironmentVariable
+from launch.event_handlers import OnProcessExit
 from launch_ros.actions import Node
 from launch.substitutions import Command, PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
-from launch_ros.parameter_descriptions import ParameterValue
-
 from ament_index_python.packages import get_package_share_directory
-import os
-import xacro
-
 
 def generate_launch_description():
-    pkg_share = FindPackageShare('avatar_bringup')
-    pkg_path = get_package_share_directory('avatar_description')
-    xacro_file = os.path.join(pkg_path, 'urdf', 'follower', 'follower.urdf.xacro')
-    world_file = os.path.join(pkg_path, 'worlds', 'follower.world')
-    controllers_file = PathJoinSubstitution([pkg_share, 'config', 'follower', 'hardware_controller_manager.yaml'])
+    pkg_share_path = get_package_share_directory('avatar_bringup')
+    pkg_description_path = get_package_share_directory('avatar_description')
 
+    xacro_file = os.path.join(pkg_description_path, 'urdf', 'follower', 'follower.urdf.xacro')
+    world_file = os.path.join(pkg_description_path, 'worlds', 'follower.world')
 
-    # xacro → URDF
-    robot_description = xacro.process_file(xacro_file).toxml()
+    # [중요] Gazebo가 모델/메쉬 파일을 찾을 수 있도록 환경변수 설정
+    if 'GZ_SIM_RESOURCE_PATH' in os.environ:
+        gz_sim_resource_path = os.environ['GZ_SIM_RESOURCE_PATH'] + ':' + os.path.join(pkg_description_path, '..')
+    else:
+        gz_sim_resource_path = os.path.join(pkg_description_path, '..')
 
-    # robot_state_publisher
+    set_gz_resource_path = SetEnvironmentVariable(name='GZ_SIM_RESOURCE_PATH', value=gz_sim_resource_path)
+
+    # 1. Robot Description 생성 (use_sim:=true로 설정해야 가제보 플러그인 사용)
+    # 주의: xacro 파일 내부에서 $(arg use_sim)을 처리하도록 되어 있어야 합니다.
+    robot_description_content = Command([
+        'xacro ', xacro_file,
+        ' use_sim:=true',             # 시뮬레이션 모드 ON
+        ' use_mock_hardware:=false'   # Mock 하드웨어 OFF (가제보가 하드웨어임)
+    ])
+    
+    robot_description = {'robot_description': robot_description_content}
+
+    # 2. Robot State Publisher (TF 발행)
+    # use_sim_time을 True로 해야 가제보 시간과 동기화됩니다.
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        parameters=[{'robot_description': robot_description}],
-        output='screen'
+        output='screen',
+        parameters=[robot_description, {'use_sim_time': True}]
     )
 
-    robot_description_content = ParameterValue(
-    Command([
-        'xacro ',
-        xacro_file,
-        ' use_sim:=false',
-        ' use_mock_hardware:=true',
-        ' mock_sensor_commands:=false'
-    ]),
-    value_type=str
-)
-
-
-    # Gazebo 실행
+    # 3. Gazebo 실행
     gz_sim = ExecuteProcess(
-        cmd=['ign', 'gazebo', world_file, '-r'],
+        cmd=['ign', 'gazebo', '-r', world_file],
         output='screen'
     )
 
-    # 로봇 스폰 (딜레이: 1초)
-    spawn_entity = TimerAction(
-        period=1.0,
-        actions=[
-            Node(
-                package='ros_gz_sim',
-                executable='create',
-                arguments=['-topic', 'robot_description', '-name', 'follower', '-x', '0', '-y', '0', '-z', '0.3'],
-                output='screen'
-            )
-        ]
-    )
-
-    # 컨트롤러 스폰
-    control_node = Node(폰
-        package='controller_manager',
-        executable='ros2_control_node',
-        parameters=[{'robot_description': robot_description_content}, controllers_file],
+    # 4. 로봇 스폰
+    spawn_entity = Node(
+        package='ros_gz_sim',
+        executable='create',
+        arguments=['-topic', 'robot_description', '-name', 'follower', '-z', '0.3'],
         output='screen'
     )
 
-    joint_state_broadcaster_spawner = Node(
-        package='controller_manager',
-        executable='spawner',
-        arguments=['joint_state_broadcaster'],
+    # 5. [필수] ROS-Gazebo Bridge (명령 전달 및 시간 동기화)
+    bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=[
+            '/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock',
+            '/joint_states@sensor_msgs/msg/JointState[ignition.msgs.Model',
+        ],
+        output='screen'
     )
 
-    arm_controller_spawner = Node(
+    # 6. 컨트롤러 스폰 (로봇이 생성된 후에 실행해야 안전함)
+    joint_state_broadcaster = Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['arm_controller'],
+        arguments=['joint_state_broadcaster', '--controller-manager', '/controller_manager'],
+        output='screen'
+    )
+
+    arm_controller = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=['arm_controller', '--controller-manager', '/controller_manager'],
+        output='screen'
+    )
+
+    # 실행 순서 제어: 로봇 스폰 -> 컨트롤러 실행
+    # spawn_entity가 끝나면(Exit) -> 컨트롤러를 실행한다
+    load_controllers = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=spawn_entity,
+            on_exit=[joint_state_broadcaster, arm_controller],
+        )
     )
 
     return LaunchDescription([
-        robot_state_publisher_node,
+        set_gz_resource_path,
         gz_sim,
+        bridge,
+        robot_state_publisher_node,
         spawn_entity,
-        control_node,
-        joint_state_broadcaster_spawner,
-        arm_controller_spawner,
+        load_controllers,
     ])

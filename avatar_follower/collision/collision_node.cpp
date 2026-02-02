@@ -77,19 +77,24 @@ void SelfCollisionNode::load_model()
   }
 
   //tip_link는 urdf에 맞게 수정 필요
-  if (!kdl_tree_.getChain(base_link_, tip_link_, kdl_chain_)) {
-    RCLCPP_ERROR(this->get_logger(), "Failed to extract KDL chain.");
+  if (!kdl_tree_.getChain(base_link_, tip_link_, left_kdl_chain_)) {
+    RCLCPP_ERROR(this->get_logger(), "Failed to extract left KDL chain.");
+    return;
+  }
+  if (!kdl_tree_.getChain(base_link_, tip_link_, right_kdl_chain_)) {
+    RCLCPP_ERROR(this->get_logger(), "Failed to extract right KDL chain.");
     return;
   }
 
   //팔이 2개니까 fk_solver_도 2개 만들어야함
-  left_fk_solver_ = std::make_shared<KDL::ChainFkSolverPos_recursive>(kdl_chain_);
-  right_fk_solver_ = std::make_shared<KDL::ChainFkSolverPos_recursive>(kdl_chain_);
+  left_fk_solver_ = std::make_shared<KDL::ChainFkSolverPos_recursive>(left_kdl_chain_);
+  right_fk_solver_ = std::make_shared<KDL::ChainFkSolverPos_recursive>(right_kdl_chain_);
 
   std::set<std::string> all_links;
   for (const auto & seg : kdl_chain_.segments) {
     all_links.insert(seg.getName());
   }
+  
   all_links.insert(base_link_);
   all_links.insert(tip_link_);
 
@@ -194,12 +199,12 @@ void SelfCollisionNode::joint_callback(const sensor_msgs::msg::JointState::Share
   }
 
   const auto & last_seg = left_kdl_chain_.getSegment(left_kdl_chain_.getNrOfSegments() - 1).getName();
-  if (!link_transforms.count(tip_link_) && link_transforms.count(last_seg)) {
-    link_transforms[tip_link_] = collision_offsets_[tip_link_] * link_transforms[last_seg];
+  if (!link_transforms.count(left_link_gripper_1) && link_transforms.count(last_seg)) {
+    link_transforms[left_link_gripper_1] = collision_offsets_[left_link_gripper_1] * link_transforms[last_seg];
   }
-  last_seg = right_kdl_chain_.getSegment(right_kdl_chain_.getNrOfSegments() - 1).getName();
-  if (!link_transforms.count(tip_link_) && link_transforms.count(last_seg)) {
-    link_transforms[tip_link_] = collision_offsets_[tip_link_] * link_transforms[last_seg];
+  const auto & right_seg = right_kdl_chain_.getSegment(right_kdl_chain_.getNrOfSegments() - 1).getName();
+  if (!link_transforms.count(right_link_gripper_1) && link_transforms.count(right_seg)) {
+    link_transforms[right_link_gripper_1] = collision_offsets_[right_link_gripper_1] * link_transforms[right_seg];
   }
 
   bool collision = false;
