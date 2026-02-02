@@ -12,7 +12,6 @@ import xacro
 
 def generate_launch_description():
     pkg_share = FindPackageShare('avatar_bringup')
-    pkg_description = FindPackageShare('avatar_description')
     pkg_path = get_package_share_directory('avatar_description')
     xacro_file = os.path.join(pkg_path, 'urdf', 'follower', 'follower.urdf.xacro')
     world_file = os.path.join(pkg_path, 'worlds', 'follower.world')
@@ -61,8 +60,8 @@ def generate_launch_description():
         ]
     )
 
-    # 컨트롤러 스폰 (딜레이: 2초)
-    control_node = Node(
+    # 컨트롤러 스폰
+    control_node = Node(폰
         package='controller_manager',
         executable='ros2_control_node',
         parameters=[{'robot_description': robot_description_content}, controllers_file],

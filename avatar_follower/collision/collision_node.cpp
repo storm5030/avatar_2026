@@ -146,7 +146,7 @@ void SelfCollisionNode::joint_callback(const sensor_msgs::msg::JointState::Share
     }
   }
   KDL::JntArray right_joint_positions(right_kdl_chain_.getNrOfJoints());
-  size_t joint_idx = 0;
+  joint_idx = 0;
   for (const auto & seg : right_kdl_chain_.segments) {
     const auto & joint = seg.getJoint();
 
@@ -176,7 +176,6 @@ void SelfCollisionNode::joint_callback(const sensor_msgs::msg::JointState::Share
   }
 
 //오른쪽 fk_solver
-  std::map<std::string, fcl::Transform3d> link_transforms;
   for (size_t i = 0; i < right_kdl_chain_.getNrOfSegments(); ++i) {
     KDL::Frame frame;
 
@@ -194,8 +193,11 @@ void SelfCollisionNode::joint_callback(const sensor_msgs::msg::JointState::Share
     
   }
 
-
   const auto & last_seg = left_kdl_chain_.getSegment(left_kdl_chain_.getNrOfSegments() - 1).getName();
+  if (!link_transforms.count(tip_link_) && link_transforms.count(last_seg)) {
+    link_transforms[tip_link_] = collision_offsets_[tip_link_] * link_transforms[last_seg];
+  }
+  last_seg = right_kdl_chain_.getSegment(right_kdl_chain_.getNrOfSegments() - 1).getName();
   if (!link_transforms.count(tip_link_) && link_transforms.count(last_seg)) {
     link_transforms[tip_link_] = collision_offsets_[tip_link_] * link_transforms[last_seg];
   }
