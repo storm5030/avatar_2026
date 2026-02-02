@@ -35,6 +35,7 @@
     <xacro:Link reference="${prefix}right_link4"/>
     <xacro:Link reference="${prefix}right_link5"/>
     <xacro:Link reference="${prefix}right_link6"/>
+    <xacro:Link reference="${prefix}right_link_gripper"/>
 
     <xacro:Link reference="${prefix}left_link1"/>
     <xacro:Link reference="${prefix}left_link2"/>
@@ -42,16 +43,28 @@
     <xacro:Link reference="${prefix}left_link4"/>
     <xacro:Link reference="${prefix}left_link5"/>
     <xacro:Link reference="${prefix}left_link6"/>
+    <xacro:Link reference="${prefix}left_link_gripper"/>
+
 
     <xacro:Link reference="${prefix}neck_link1"/>
     <xacro:Link reference="${prefix}neck_link2"/>
 
     <xacro:SimpleTransmission trans="${prefix}trans1" joint="${prefix}right_joint1" actuator="${prefix}actuator1" />
     <xacro:SimpleTransmission trans="${prefix}trans2" joint="${prefix}right_joint2" actuator="${prefix}actuator2" />
-    <xacro:SimpleTransmission trans="${prefix}trans3" joint="${prefix}right_joint2" actuator="${prefix}actuator3" />
-    <xacro:SimpleTransmission trans="${prefix}trans4" joint="${prefix}right_joint2" actuator="${prefix}actuator4" />
-    <xacro:SimpleTransmission trans="${prefix}trans5" joint="${prefix}right_joint2" actuator="${prefix}actuator5" />
-    <xacro:SimpleTransmission trans="${prefix}trans6" joint="${prefix}right_joint2" actuator="${prefix}actuator6" />
+    <xacro:SimpleTransmission trans="${prefix}trans3" joint="${prefix}right_joint3" actuator="${prefix}actuator3" />
+    <xacro:SimpleTransmission trans="${prefix}trans4" joint="${prefix}right_joint4" actuator="${prefix}actuator4" />
+    <xacro:SimpleTransmission trans="${prefix}trans5" joint="${prefix}right_joint5" actuator="${prefix}actuator5" />
+    <xacro:SimpleTransmission trans="${prefix}trans6" joint="${prefix}right_joint6" actuator="${prefix}actuator6" />
+    <xacro:SimpleTransmission trans="${prefix}trans7" joint="${prefix}right_gripper_joint" actuator="${prefix}actuator7" />
+    <xacro:SimpleTransmission trans="${prefix}trans8" joint="${prefix}left_joint1" actuator="${prefix}actuator8" />
+    <xacro:SimpleTransmission trans="${prefix}trans9" joint="${prefix}left_joint2" actuator="${prefix}actuator9" />
+    <xacro:SimpleTransmission trans="${prefix}trans10" joint="${prefix}left_joint3" actuator="${prefix}actuator10" />
+    <xacro:SimpleTransmission trans="${prefix}trans11" joint="${prefix}left_joint4" actuator="${prefix}actuator11" />
+    <xacro:SimpleTransmission trans="${prefix}trans12" joint="${prefix}left_joint5" actuator="${prefix}actuator12" />
+    <xacro:SimpleTransmission trans="${prefix}trans13" joint="${prefix}left_joint6" actuator="${prefix}actuator13" />
+    <xacro:SimpleTransmission trans="${prefix}trans14" joint="${prefix}left_gripper_joint" actuator="${prefix}actuator14" />
+    <xacro:SimpleTransmission trans="${prefix}trans15" joint="${prefix}neck_joint1" actuator="${prefix}actuator15" />
+    <xacro:SimpleTransmission trans="${prefix}trans16" joint="${prefix}neck_joint2" actuator="${prefix}actuator16" />
 
 
   </xacro:macro>

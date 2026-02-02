@@ -16,7 +16,7 @@
 
   <joint name="$(arg prefix)world_fixed" type="fixed">
     <parent link="world"/>
-    <child link="$(arg prefix)link0"/>
+    <child link="$(arg prefix)base_link"/>
     <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
   </joint>
 
