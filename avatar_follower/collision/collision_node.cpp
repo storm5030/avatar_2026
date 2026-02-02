@@ -157,27 +157,45 @@ void SelfCollisionNode::joint_callback(const sensor_msgs::msg::JointState::Share
       right_joint_positions(joint_idx++) = msg->position[std::distance(msg->name.begin(), it)];
     }
   }
-
-
+//왼쪽 fk_solver 
   std::map<std::string, fcl::Transform3d> link_transforms;
   for (size_t i = 0; i < left_kdl_chain_.getNrOfSegments(); ++i) {
     KDL::Frame frame;
-
-    //좌우 fk_solver 
+ 
     left_fk_solver_->JntToCart(left_joint_positions, frame, i);
+    std::string link_name = (i == 0) ? base_link_ : left_kdl_chain_.getSegment(i - 1).getName();
 
-    std::string link_name = (i == 0) ? base_link_ : kdl_chain_.getSegment(i - 1).getName();
     fcl::Transform3d tf = fcl::Transform3d::Identity();
     tf.translation() = fcl::Vector3d(frame.p.x(), frame.p.y(), frame.p.z());
     for (int r = 0; r < 3; ++r) {
-      for (int c = 0; c < 3; ++c) {
+        for (int c = 0; c < 3; ++c) {
         tf.linear()(r, c) = frame.M(r, c);
-      }
+        }
     }
     link_transforms[link_name] = tf * collision_offsets_[link_name];
   }
 
-  const auto & last_seg = kdl_chain_.getSegment(kdl_chain_.getNrOfSegments() - 1).getName();
+//오른쪽 fk_solver
+  std::map<std::string, fcl::Transform3d> link_transforms;
+  for (size_t i = 0; i < right_kdl_chain_.getNrOfSegments(); ++i) {
+    KDL::Frame frame;
+
+    right_fk_solver_->JntToCart(right_joint_positions, frame, i);
+    std::string link_name = (i == 0) ? base_link_ : right_kdl_chain_.getSegment(i - 1).getName();
+
+    fcl::Transform3d tf = fcl::Transform3d::Identity();
+    tf.translation() = fcl::Vector3d(frame.p.x(), frame.p.y(), frame.p.z());
+    for (int r = 0; r < 3; ++r) {
+        for (int c = 0; c < 3; ++c) {
+        tf.linear()(r, c) = frame.M(r, c);
+        }
+    }
+    link_transforms[link_name] = tf * collision_offsets_[link_name];
+    
+  }
+
+
+  const auto & last_seg = left_kdl_chain_.getSegment(left_kdl_chain_.getNrOfSegments() - 1).getName();
   if (!link_transforms.count(tip_link_) && link_transforms.count(last_seg)) {
     link_transforms[tip_link_] = collision_offsets_[tip_link_] * link_transforms[last_seg];
   }
