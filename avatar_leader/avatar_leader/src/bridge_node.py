@@ -1,7 +1,8 @@
 import math
 import time
+from typing import List, Dict
 
-from dynamixel_sdk import PortHandler, PacketHandler
+from dynamixel_sdk import PortHandler, PacketHandler, GroupSyncRead
 
 import rclpy
 from rclpy.node import Node
@@ -31,7 +32,9 @@ class BridgeNode(Node):
         # 통신 속도
         self.declare_parameter('serial_baud', 1000000)
         # 다이나믹셀 id 설정
-        self.declare_parameter('dxl_id', 2)
+        self.declare_parameter('left_ids', [1,2,3,4,5,6,7])
+        self.declare_parameter('right_ids', [8,9,10,11,12,13,14])
+
         # 받을 주파수 
         self.declare_parameter('hz', 50.0)
         # LowPassFilter 주파수
@@ -39,11 +42,14 @@ class BridgeNode(Node):
 
         port = self.get_parameter('serial_port').value
         baud = int(self.get_parameter('serial_baud').value)
-        self.dxl_id = int(self.get_parameter('dxl_id').value)        
         hz = float(self.get_parameter('hz').value)
         cutoff = float(self.get_parameter('lpf_cutoff_hz').value)
 
-        self.pub = self.create_publisher(JointState, '/joint_states', 10)
+        self.joint_names: List[str] = ["joint_L1", "joint_L2", "joint_L3", "joint_L4", "joint_L5", "joint_L6", "joint_L7",
+                                       "joint_R1", "joint_R2", "joint_R3", "joint_R4", "joint_R5", "joint_R6", "joint_R7"]
+        #self.joint_names: List[str] = ["test_1", "test_2", "test_3", "test_4", "test_5"]
+        self.joint_ids: List[int] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+        #self.joint_ids: List[int] = [1,2,3,4,5]
 
         # 다이나믹셀 자체 sdk 속 포트 핸들러 패킷 핸들러 이용
         # https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/sample_code/python_read_write_protocol_1_0/
@@ -51,66 +57,107 @@ class BridgeNode(Node):
         self.port_handler = PortHandler(port)
         self.packet_handler = PacketHandler(2.0)
 
-        # 포트 및 보드레이트 확인
-        if self.port_handler.openPort():
-            print("Succeeded to open the port!")
-        else:
-            raise RuntimeError(f'Falied to open port: {port}')
-        
-        if self.port_handler.setBaudRate(baud):
-            print("Succeeded to change the baudrate!")
-        else:
-            raise RuntimeError(f'Falied to set baudrate: {baud}')
+        self.group_sync_read = GroupSyncRead(
+            self.port_handler,
+            self.packet_handler,
+            ADDR_PRESENT_POSITION,
+            LEN_PRESENT_POSITION
+        )
+
+        self.pub = self.create_publisher(JointState, '/joint_states', 10)
+
+        if not self.port_handler.openPort():
+            raise RuntimeError(f"Failed to open port: {port}")
+        if not self.port_handler.setBaudRate(baud):
+            raise RuntimeError(f"Failed to set baudrate: {baud}")
+
+        # 싱크 안정성 검사
+        for dxl_id in self.joint_ids:
+            ok = self.group_sync_read.addParam(dxl_id)
+            if not ok:
+                raise RuntimeError(f"GroupSyncRead addParam Failed for ID = {dxl_id}")
         
         # 토크 꺼졌나 확인
-        if not self.torque_off():
-           raise RuntimeError("Failed to turn torque off")
+        if not self.torque_off_all():
+           raise RuntimeError("Failed to turn torque off for all motors")
         
-        self.lpf = LowPassFilter(cutoff_hz=cutoff)
+        self.lpf: Dict[int, LowPassFilter] = {}
+        for dxl_id in self.joint_ids:
+            self.lpf[dxl_id] = LowPassFilter(cutoff_hz=cutoff)
 
         self.dt = 1.0 / hz
         self.timer = self.create_timer(self.dt, self.tick)
 
-        self.get_logger().info(f"LPF cutoff_hz = {cutoff} Hz, dt = {self.dt:.6f}s")
+        self.get_logger().info(
+            f"Configured Joints: {len(self.joint_ids)})"
+            f"LPF cutoff_hz = {cutoff} Hz, dt = {self.dt:.6f}s")
 
     def tick(self):
-        # https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/api_reference/python/python_packethandler/
-        raw_angle, comm_result, error = self.packet_handler.read4ByteTxRx(self.port_handler, self.dxl_id, ADDR_PRESENT_POSITION)
-        
-        # 안정성 관련 부분
-        if comm_result != 0 or error!= 0:
-            self.get_logger().warn(f"DXL read failed: comm = {comm_result}")
+        comm_result = self.group_sync_read.txRxPacket()
+        if comm_result != 0:
+            self.get_logger().warn(f"GroupSyncRead txRxPacket failed: comm_result = {comm_result}")
             return
-         
-        rad_angle = raw_angle_to_rad(int(raw_angle))
 
-        rad_angle_f = self.lpf.step(rad_angle, self.dt)
+        positions: List[float] = []
+        fail = False
 
-        # 잘 프린팅 되고 있나 확인용으로 추가
-        self.get_logger().info(
-            f"[DXL] raw={raw_angle}, rad={rad_angle:.4f}, rad_f={rad_angle_f:.4f}",
-            throttle_duration_sec=1.0
-        )
+        for name, dxl_id in zip(self.joint_names, self.joint_ids):
+            available = self.group_sync_read.isAvailable(
+                dxl_id, ADDR_PRESENT_POSITION, LEN_PRESENT_POSITION
+            )
+            if not available:
+                self.get_logger().warn(f"Data not available for {name} ID = {dxl_id}")
+                positions.append(float('nan'))
+                fail = True
+                continue
+
+            raw = self.group_sync_read.getData(
+                dxl_id, ADDR_PRESENT_POSITION, LEN_PRESENT_POSITION
+            )
+            rad = raw_angle_to_rad(int(raw))
+
+            rad_f = self.lpf[dxl_id].step(rad, self.dt)
+            positions.append(float(rad_f))
+
         msg = JointState()
         msg.header.stamp = self.get_clock().now().to_msg()
-        msg.name = ["joint1"]
-        msg.position = [float(rad_angle_f)]
+        msg.name = self.joint_names
+        msg.position = positions
         self.pub.publish(msg)
 
+        if fail:
+            self.get_logger().warn(
+                f"/joint_states published with NaN for some joints"
+                )
+        else:
+            self.get_logger().info(
+                f"[DXL] {self.joint_names[0]} pos={positions[0]:.4f} rad (filtered)"
+                )
+
     # 토크 자동으로 꺼주는 함수 코드
-    def torque_off(self):
-        comm_result, error = self.packet_handler.write1ByteTxRx(
-            self.port_handler, self.dxl_id, ADDR_TORQUE_ENABLE, 0
+    def torque_off_all(self) -> bool:
+        ok_all = True
+        for dxl_id in self.joint_ids:
+            comm_result, error = self.packet_handler.write1ByteTxRx(
+                self.port_handler, dxl_id, ADDR_TORQUE_ENABLE, 0
+                )
+            if comm_result != 0 or error != 0:
+                self.get_logger().warn(f"Torque off failed: comm={comm_result}, error={error}")
+                return False
+                ok_all = False
+                continue
+            
+            val, comm_result, error = self.packet_handler.read1ByteTxRx(
+                self.port_handler, dxl_id, ADDR_TORQUE_ENABLE
             )
-        if comm_result != 0 or error != 0:
-            self.get_logger().warn(f"Torque off failed: comm={comm_result}, error={error}")
-            return False
+            if not (comm_result == 0 and error == 0 and val == 0):
+                self.get_logger().warn(
+                    f"Torque Enable failed for ID = {dxl_id}: value = {val}, comm = {comm_result}, error = {error}"
+                    )
+                ok_all = False
         
-        val, comm_result, error = self.packet_handler.read1ByteTxRx(
-            self.port_handler, self.dxl_id, ADDR_TORQUE_ENABLE
-        )
-        self.get_logger().info(f"Torque Enable = {val}")
-        return (comm_result == 0 and error == 0 and val == 0)
+        self.get_logger().info("Torque all OFF")
+        return ok_all
 
 # 메인은 그냥 늘 하는것
 def main():
