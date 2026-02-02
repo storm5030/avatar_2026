@@ -77,11 +77,11 @@ void SelfCollisionNode::load_model()
   }
 
   //tip_link는 urdf에 맞게 수정 필요
-  if (!kdl_tree_.getChain(base_link_, tip_link_, left_kdl_chain_)) {
+  if (!kdl_tree_.getChain(base_link_, 'left_link_gripper_1', left_kdl_chain_)) {
     RCLCPP_ERROR(this->get_logger(), "Failed to extract left KDL chain.");
     return;
   }
-  if (!kdl_tree_.getChain(base_link_, tip_link_, right_kdl_chain_)) {
+  if (!kdl_tree_.getChain(base_link_, 'right_link_gripper_1', right_kdl_chain_)) {
     RCLCPP_ERROR(this->get_logger(), "Failed to extract right KDL chain.");
     return;
   }
@@ -94,9 +94,10 @@ void SelfCollisionNode::load_model()
   for (const auto & seg : kdl_chain_.segments) {
     all_links.insert(seg.getName());
   }
-  
+
   all_links.insert(base_link_);
-  all_links.insert(tip_link_);
+  all_links.insert(right_link_gripper_1);
+  all_links.insert(left_link_gripper_1);
 
   for (const auto & link : all_links) {
     process_collision_from_URDF(model, link);
@@ -164,7 +165,7 @@ void SelfCollisionNode::joint_callback(const sensor_msgs::msg::JointState::Share
   }
 //왼쪽 fk_solver 
   std::map<std::string, fcl::Transform3d> link_transforms;
-  for (size_t i = 0; i < left_kdl_chain_.getNrOfSegments(); ++i) {
+  for (size_t i = 0; i <= left_kdl_chain_.getNrOfSegments(); ++i) {
     KDL::Frame frame;
  
     left_fk_solver_->JntToCart(left_joint_positions, frame, i);
@@ -181,7 +182,7 @@ void SelfCollisionNode::joint_callback(const sensor_msgs::msg::JointState::Share
   }
 
 //오른쪽 fk_solver
-  for (size_t i = 0; i < right_kdl_chain_.getNrOfSegments(); ++i) {
+  for (size_t i = 0; i <= right_kdl_chain_.getNrOfSegments(); ++i) {
     KDL::Frame frame;
 
     right_fk_solver_->JntToCart(right_joint_positions, frame, i);
