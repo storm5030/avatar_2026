@@ -49,6 +49,11 @@
     use_mock_hardware="$(arg use_mock_hardware)"
     mock_sensor_commands="$(arg mock_sensor_commands)"
     port_name="$(arg port_name)"/>
+    
+  <gazebo>
+    <plugin filename="libign_ros2_control-system.so" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+      <parameters>$(find avatar_bringup)/config/follower/hardware_controller_manager.yaml</parameters>
+    </plugin>
+  </gazebo>
 
 </robot>
-
