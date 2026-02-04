@@ -45,8 +45,8 @@ class BridgeNode(Node):
         hz = float(self.get_parameter('hz').value)
         cutoff = float(self.get_parameter('lpf_cutoff_hz').value)
 
-        self.joint_names: List[str] = ["joint_L1", "joint_L2", "joint_L3", "joint_L4", "joint_L5", "joint_L6", "joint_L7",
-                                       "joint_R1", "joint_R2", "joint_R3", "joint_R4", "joint_R5", "joint_R6", "joint_R7"]
+        self.joint_names: List[str] = ["right_joint1", "right_joint2", "right_joint3", "right_joint4", "right_joint5", "right_joint6", "right_joint_gripper",
+                                       "left_joint1", "left_joint2", "left_joint3", "left_joint4", "left_joint5", "left_joint6", "left_joint7"]
         #self.joint_names: List[str] = ["test_1", "test_2", "test_3", "test_4", "test_5"]
         self.joint_ids: List[int] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
         #self.joint_ids: List[int] = [1,2,3,4,5]
@@ -64,7 +64,7 @@ class BridgeNode(Node):
             LEN_PRESENT_POSITION
         )
 
-        self.pub = self.create_publisher(JointState, '/joint_states', 10)
+        self.pub = self.create_publisher(JointState, '/leader/joint_states', 10)
 
         if not self.port_handler.openPort():
             raise RuntimeError(f"Failed to open port: {port}")
