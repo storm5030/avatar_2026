@@ -40,9 +40,8 @@
 #   fcl   # FCL 라이브러리 이름 (보통 fcl 또는 libfcl)
 # )
 
-# install(TARGETS
-#   collision_node
+# install(PROGRAMS
+#   avatar_follower/safety_stop.py  # 현재 파일이 있는 정확한 위치를 적으세요! (예: scripts/safety_stop.py)
 #   DESTINATION lib/${PROJECT_NAME}
 # )
-
 # ament_package()

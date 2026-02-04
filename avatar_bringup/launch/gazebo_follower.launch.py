@@ -13,6 +13,13 @@ def generate_launch_description():
 
     xacro_file = os.path.join(pkg_description_path, 'urdf', 'follower', 'follower.urdf.xacro')
     world_file = os.path.join(pkg_description_path, 'worlds', 'follower.world')
+    
+    safety_node = Node(
+        package='avatar_follower',      # 1. 패키지 이름
+        executable='safety_stop.py',    # 2. 실행할 파일 이름 (CMakeLists.txt에 등록한 이름)
+        name='safety_stop_node',
+        output='screen'
+    )
 
     # [중요] Gazebo가 모델/메쉬 파일을 찾을 수 있도록 환경변수 설정
     if 'GZ_SIM_RESOURCE_PATH' in os.environ:
@@ -40,6 +47,7 @@ def generate_launch_description():
         output='screen',
         parameters=[robot_description, {'use_sim_time': True}]
     )
+
 
     # 3. Gazebo 실행
     gz_sim = ExecuteProcess(
@@ -81,6 +89,20 @@ def generate_launch_description():
         output='screen'
     )
 
+    collision_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        name='collision_bridge',
+        arguments=[
+            # 형식: '긴_주소@ROS메시지타입@Ignition메시지타입'
+            # (아래 주소는 아까 찾은 본인의 긴 주소로 바꿔야 합니다!)
+            '/world/default/model/follower/link/left_link_gripper_1/sensor/left_gripper_bumper/contact' +
+            '@ros_gz_interfaces/msg/Contacts' +
+            '@ignition.msgs.Contacts'
+        ],
+        output='screen'
+    )
+
     # 실행 순서 제어: 로봇 스폰 -> 컨트롤러 실행
     # spawn_entity가 끝나면(Exit) -> 컨트롤러를 실행한다
     load_controllers = RegisterEventHandler(
@@ -97,4 +119,6 @@ def generate_launch_description():
         robot_state_publisher_node,
         spawn_entity,
         load_controllers,
+        collision_bridge,
+        safety_node,
     ])

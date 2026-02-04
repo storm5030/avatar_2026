@@ -518,6 +518,35 @@
       <dynamics damping="0.1" />
     </joint>
 
+    <gazebo reference="left_link_gripper_1">
+      <self_collide>true</self_collide>
+      <sensor name="left_gripper_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>left_link_gripper_1_collision</collision>
+        </contact>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="right_link_gripper_1">
+      <self_collide>true</self_collide>
+      <sensor name="right_gripper_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>right_link_gripper_1_collision</collision>
+        </contact>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="left_link6_1"><self_collide>true</self_collide></gazebo>
+    <gazebo reference="left_link5_1"><self_collide>true</self_collide></gazebo>
+    <gazebo reference="left_link4_1"><self_collide>true</self_collide></gazebo>
+    
+    <gazebo reference="right_link6_1"><self_collide>true</self_collide></gazebo>
+    <gazebo reference="right_link5_1"><self_collide>true</self_collide></gazebo>
+    <gazebo reference="right_link4_1"><self_collide>true</self_collide></gazebo>
 
 
   </xacro:macro>
