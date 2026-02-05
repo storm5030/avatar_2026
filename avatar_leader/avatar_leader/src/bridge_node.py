@@ -9,19 +9,22 @@ from rclpy.node import Node
 from std_msgs.msg import Float64
 from sensor_msgs.msg import JointState
 from avatar_leader.plugins.filters import LowPassFilter
+from avatar_leader.plugins.calibration import Calibration
 
 # 받아올 데이터의 크기 관리
 ADDR_PRESENT_POSITION = 132
 LEN_PRESENT_POSITION = 4
 ADDR_TORQUE_ENABLE = 64
 LEN_TORQUE_ENABLE = 1
+ADDR_OPERSATION_MODE = 11
+LEN_OPERSATION_MODE = 1
 
 # 모터는 현재 값을 불러올 때 0 - 1023 값을 0 - 300 도 사이로 받아옴.
 # 모터의 튀어나온 부분이 150도 512인 것으로 보아 여기에도 보정이 필요해보임
 # https://emanual.robotis.com/docs/kr/dxl/ax/ax-12a/ 
 # 위 링크의 4.19 Present Position 참고
 def raw_angle_to_rad(raw_angle):
-    return float(raw_angle - 1600) / 4096.0 * 2 * math.pi
+    return float(raw_angle) / 4096.0 * 2 * math.pi
 
 class BridgeNode(Node):
 
@@ -40,15 +43,18 @@ class BridgeNode(Node):
         # LowPassFilter 주파수
         self.declare_parameter('lpf_cutoff_hz', 5.0)
 
+        self.declare_parameter('operation_mode', 4)  # 3 is for position control mode
+
         port = self.get_parameter('serial_port').value
         baud = int(self.get_parameter('serial_baud').value)
         hz = float(self.get_parameter('hz').value)
         cutoff = float(self.get_parameter('lpf_cutoff_hz').value)
+        operation_mode = int(self.get_parameter('operation_mode').value)
 
-        self.joint_names: List[str] = ["joint_L1", "joint_L2", "joint_L3", "joint_L4", "joint_L5", "joint_L6", "joint_L7",
-                                       "joint_R1", "joint_R2", "joint_R3", "joint_R4", "joint_R5", "joint_R6", "joint_R7"]
+        self.joint_names: List[str] = ["right_joint1", "right_joint2", "right_joint3", "right_joint4", "right_joint5", "right_joint6",
+                                       "left_joint1", "left_joint2", "left_joint3", "left_joint4", "left_joint5", "left_joint6"]
         #self.joint_names: List[str] = ["test_1", "test_2", "test_3", "test_4", "test_5"]
-        self.joint_ids: List[int] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+        self.joint_ids: List[int] = [11,12,13,14,15,16,21,22,23,24,25,26]
         #self.joint_ids: List[int] = [1,2,3,4,5]
 
         # 다이나믹셀 자체 sdk 속 포트 핸들러 패킷 핸들러 이용
@@ -64,7 +70,7 @@ class BridgeNode(Node):
             LEN_PRESENT_POSITION
         )
 
-        self.pub = self.create_publisher(JointState, '/joint_states', 10)
+        self.pub = self.create_publisher(JointState, '/leader/joint_states', 10)
 
         if not self.port_handler.openPort():
             raise RuntimeError(f"Failed to open port: {port}")
@@ -81,6 +87,19 @@ class BridgeNode(Node):
         if not self.torque_off_all():
            raise RuntimeError("Failed to turn torque off for all motors")
         
+        for dxl_id in self.joint_ids:
+            # 모드 설정
+            comm_result, error = self.packet_handler.write1ByteTxRx(
+                self.port_handler, dxl_id, ADDR_OPERSATION_MODE, operation_mode
+            )
+            if comm_result != 0:
+                raise RuntimeError(f"Failed to communicate when setting operation mode for ID = {dxl_id}: comm={comm_result}")
+            elif comm_result != 0 or error != 0:
+                raise RuntimeError(f"Failed to set operation mode for ID = {dxl_id}: comm={comm_result}, error={error}")
+            else:
+                self.get_logger().info(f"Set operation mode to {operation_mode} for ID = {dxl_id}")
+
+
         self.lpf: Dict[int, LowPassFilter] = {}
         for dxl_id in self.joint_ids:
             self.lpf[dxl_id] = LowPassFilter(cutoff_hz=cutoff)
@@ -114,6 +133,15 @@ class BridgeNode(Node):
             raw = self.group_sync_read.getData(
                 dxl_id, ADDR_PRESENT_POSITION, LEN_PRESENT_POSITION
             )
+
+            if raw >= 2**31:
+                raw = raw - 2**32
+
+            
+            if( dxl_id == 11) :
+                self.get_logger().info(
+                    f"[DXL] {self.joint_names[0]} pos={raw}"
+                    )
             rad = raw_angle_to_rad(int(raw))
 
             rad_f = self.lpf[dxl_id].step(rad, self.dt)
@@ -129,10 +157,10 @@ class BridgeNode(Node):
             self.get_logger().warn(
                 f"/joint_states published with NaN for some joints"
                 )
-        else:
-            self.get_logger().info(
-                f"[DXL] {self.joint_names[0]} pos={positions[0]:.4f} rad (filtered)"
-                )
+        # else:
+        #     self.get_logger().info(
+        #         f"[DXL] {self.joint_names[0]} pos={raw[0]:.4f} rad (filtered)"
+        #         )
 
     # 토크 자동으로 꺼주는 함수 코드
     def torque_off_all(self) -> bool:
