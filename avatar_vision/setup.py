@@ -29,6 +29,8 @@ setup(
             'hand_node = avatar_vision.hand_node:main',
             'tracker_node = avatar_vision.tracker:main',
             'webcam_publisher = avatar_vision.webcam_publisher:main',
+            'yolo_deepsort_subscriber = avatar_vision.webcam_pub_and_tracker:main',
+            'det_sub = avatar_vision.det_sub:main',
         ],
     },
 )
