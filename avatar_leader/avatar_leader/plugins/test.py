@@ -14,3 +14,6 @@ print("Scaled Follower Target Position:", scaled_position)
 
 follower_angles = calibrator.calibrate(angles)
 print("Calibrated Follower Angles:", follower_angles)
+
+inverse_position = calibrator.forward_kinematics_follower(follower_angles)
+print("Follower End Effector Position from Inverse Kinematics:", inverse_position)
