@@ -236,7 +236,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}left_link_gripper_1_collision">
         <origin xyz="-0.01875 -0.1629 -0.20515" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/left_link_gripper_1.stl" scale="0.01 0.01 0.01"/>
@@ -362,7 +362,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}right_link_gripper_1_collision">
         <origin xyz="-0.01925 0.1645 -0.20515" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/right_link_gripper_1.stl" scale="0.01 0.01 0.01"/>
@@ -517,6 +517,34 @@
       <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
+
+    <gazebo reference="left_link_gripper_1">
+      <sensor name="left_gripper_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link_gripper_1_collision_collision</collision>
+        </contact>
+        
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="right_link_gripper_1">
+      <sensor name="right_gripper_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link_gripper_1_collision_collision</collision>
+        </contact>
+        
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
 
 
 

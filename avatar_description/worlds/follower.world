@@ -1,7 +1,10 @@
 <?xml version="1.0" ?>
 <sdf version="1.6">
   <world name="default">
-
+    <plugin
+     filename="libignition-gazebo-contact-system.so"
+     name="ignition::gazebo::systems::Contact">
+    </plugin>
     <!-- 전체 물리 엔진 설정 -->
     <physics name="1ms" type="ode">
       <max_step_size>0.001</max_step_size>
