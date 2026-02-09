@@ -55,13 +55,19 @@ def generate_launch_description():
         output='screen'
     )
 
-    # 5. [필수] ROS-Gazebo Bridge (명령 전달 및 시간 동기화)
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
+            # 1. 시계 (필수)
             '/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock',
+            
+            # 2. 관절 상태 (필수)
             '/joint_states@sensor_msgs/msg/JointState[ignition.msgs.Model',
+            
+            # 3. [복구됨] 충돌 센서 브릿지
+            # 주의: 이 토픽 이름이 ign topic -l 에서 나온 것과 토씨 하나 안 틀리고 똑같아야 합니다!
+            '/world/default/model/follower/link/left_link_gripper_1/sensor/left_gripper_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts'
         ],
         output='screen'
     )
@@ -81,12 +87,19 @@ def generate_launch_description():
         output='screen'
     )
 
+    safety_stop = Node(
+        package='avatar_follower',      # 패키지 이름 확인!
+        executable='safety_stop', # setup.py에 등록된 실행 파일 이름
+        name='safety_stop_node',
+        output='screen'
+    )
+
     # 실행 순서 제어: 로봇 스폰 -> 컨트롤러 실행
     # spawn_entity가 끝나면(Exit) -> 컨트롤러를 실행한다
     load_controllers = RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=spawn_entity,
-            on_exit=[joint_state_broadcaster, arm_controller],
+            on_exit=[joint_state_broadcaster, arm_controller, safety_stop],
         )
     )
 
