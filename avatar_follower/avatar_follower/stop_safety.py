@@ -8,23 +8,114 @@ class SafetyStopNode(Node):
     def __init__(self):
         super().__init__('safety_stop_node')
 
-        topic_name = '/world/default/model/follower/link/left_link_gripper_1/sensor/left_gripper_bumper/contact'
-
-        # 1. 범퍼 센서 구독 (충돌 감지)
-        self.subscription = self.create_subscription(
+        # Contact sensor subscriptions for all links
+        # Base link
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/base_link/sensor/base_link_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        # Neck links
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/neck_link1_1/sensor/neck_link1_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/neck_link2_1/sensor/neck_link2_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        # Left arm links
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/left_link1_1/sensor/left_link1_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/left_link2_1/sensor/left_link2_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/left_link3_1/sensor/left_link3_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/left_link4_1/sensor/left_link4_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/left_link5_1/sensor/left_link5_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/left_link6_1/sensor/left_link6_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        self.create_subscription(
             Contacts,
             '/world/default/model/follower/link/left_link_gripper_1/sensor/left_gripper_bumper/contact',
             self.collision_callback,
             10)
         
-        self.sub_right = self.create_subscription(
+        # Right arm links
+        self.create_subscription(
             Contacts,
-            '/world/default/model/follower/link/right_link_gripper_1/sensor/right_gripper_bumper/contact', # 오른손 긴 주소 (확인 필요!)
+            '/world/default/model/follower/link/right_link1_1/sensor/right_link1_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/right_link2_1/sensor/right_link2_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/right_link3_1/sensor/right_link3_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/right_link4_1/sensor/right_link4_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/right_link5_1/sensor/right_link5_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/right_link6_1/sensor/right_link6_1_bumper/contact',
+            self.collision_callback,
+            10)
+        
+        self.create_subscription(
+            Contacts,
+            '/world/default/model/follower/link/right_link_gripper_1/sensor/right_gripper_bumper/contact',
             self.collision_callback,
             10)
             
-        # 2. 모터 컨트롤러 퍼블리셔 (멈춤 명령용)
-        # (사용하시는 컨트롤러 토픽 이름으로 바꾸세요!)
+        # Motor controller publisher (stop command)
         self.publisher_ = self.create_publisher(
             JointTrajectory,
             '/arm_controller/joint_trajectory', 
@@ -72,7 +163,7 @@ class SafetyStopNode(Node):
         point.time_from_start.nanosec = 100000000 # 0.1초 안에 멈춰라
 
         stop_msg.points.append(point)
-        self.publisher_.publish(msg)
+        self.publisher_.publish(stop_msg)
 
 def main(args=None):
     rclpy.init(args=args)
