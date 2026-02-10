@@ -3,13 +3,13 @@ import numpy as np
 
 class Calibration():
     def __init__(self):
-        self.leader_L1 = -0.25
-        self.leader_L2 = -0.30 
+        self.leader_L1 = -0.31
+        self.leader_L2 = -0.31 
         self.follower_L1 = -0.15
-        self.follower_L2 = -0.20
-        self.leader_offset = 0.20
-        self.follwer_offset = 0.15
-
+        self.follower_L2 = -0.15
+        self.leader_offset = -0.25
+        self.follower_offset = -0.15
+    
     def calibrate(self, leader_angles):
         # Step 1: Forward kinematics for leader to get end effector position
         leader_position = self.forward_kinematics_leader(leader_angles)
@@ -30,7 +30,7 @@ class Calibration():
         elbow_yaw = angles[2]
         elbow_pitch = angles[3]
         # Calculate position of the end effector based on the angles and link lengths
-        end_effector_position = np.array([0, self.leader_offset, 0]).T 
+        end_effector_position = np.array([0, self.leader_offset, 0]).T
         end_effector_position += np.array(self.rotation_matrix_pitch(shoulder_pitch)) @ np.array(self.rotation_matrix_roll(shoulder_roll)) @ (np.array([0, 0, self.leader_L1]).T) 
         end_effector_position += np.array(self.rotation_matrix_pitch(shoulder_pitch)) @ np.array(self.rotation_matrix_roll(shoulder_roll)) @ np.array(self.rotation_matrix_yaw(elbow_yaw)) @ self.rotation_matrix_pitch(elbow_pitch) @ (np.array([0, 0, self.leader_L2]).T)
         return np.array(end_effector_position).T
@@ -50,7 +50,7 @@ class Calibration():
         elbow_pitch = angles[3]
         # Calculate position of the end effector based on the angles and link lengths
         # Match the leader's structure: pitch first, then roll
-        end_effector_position = np.array([0, self.follwer_offset, 0])
+        end_effector_position = np.array([0, self.follower_offset, 0])
         end_effector_position += np.array(self.rotation_matrix_pitch(shoulder_pitch)) @ np.array(self.rotation_matrix_roll(shoulder_roll)) @ np.array([0, 0, self.follower_L1])
         end_effector_position += np.array(self.rotation_matrix_pitch(shoulder_pitch)) @ np.array(self.rotation_matrix_roll(shoulder_roll)) @ np.array(self.rotation_matrix_yaw(elbow_yaw)) @ np.array(self.rotation_matrix_pitch(elbow_pitch)) @ np.array([0, 0, self.follower_L2])
         return end_effector_position
@@ -78,10 +78,10 @@ class Calibration():
     
     # Inverse Kinematics for followr (initialized with leader angles) (follower end effector position -> 4 follower angles)
     def inverse_kinematics_follower(self, follower_position, initial_angles):
-        
+
         theta = np.array(initial_angles, dtype=float)
         follower_position = np.array(follower_position, dtype=float)
-        tol = 1e-6
+        tol = 1e-5
         max_iter = 1000
         damping = 0.1  # Damping factor for stability
         
