@@ -65,9 +65,30 @@ def generate_launch_description():
             # 2. 관절 상태 (필수)
             '/joint_states@sensor_msgs/msg/JointState[ignition.msgs.Model',
             
-            # 3. [복구됨] 충돌 센서 브릿지
-            # 주의: 이 토픽 이름이 ign topic -l 에서 나온 것과 토씨 하나 안 틀리고 똑같아야 합니다!
-            '/world/default/model/follower/link/left_link_gripper_1/sensor/left_gripper_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts'
+            # 3. 충돌 센서 브릿지 - Base
+            '/world/default/model/follower/link/base_link/sensor/base_link_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            
+            # Neck Links
+            '/world/default/model/follower/link/neck_link1_1/sensor/neck_link1_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            '/world/default/model/follower/link/neck_link2_1/sensor/neck_link2_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            
+            # Left Arm Links
+            '/world/default/model/follower/link/left_link1_1/sensor/left_link1_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            '/world/default/model/follower/link/left_link2_1/sensor/left_link2_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            '/world/default/model/follower/link/left_link3_1/sensor/left_link3_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            '/world/default/model/follower/link/left_link4_1/sensor/left_link4_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            '/world/default/model/follower/link/left_link5_1/sensor/left_link5_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            '/world/default/model/follower/link/left_link6_1/sensor/left_link6_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            '/world/default/model/follower/link/left_link_gripper_1/sensor/left_gripper_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            
+            # Right Arm Links
+            '/world/default/model/follower/link/right_link1_1/sensor/right_link1_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            '/world/default/model/follower/link/right_link2_1/sensor/right_link2_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            '/world/default/model/follower/link/right_link3_1/sensor/right_link3_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            '/world/default/model/follower/link/right_link4_1/sensor/right_link4_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            '/world/default/model/follower/link/right_link5_1/sensor/right_link5_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            '/world/default/model/follower/link/right_link6_1/sensor/right_link6_1_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts',
+            '/world/default/model/follower/link/right_link_gripper_1/sensor/right_gripper_bumper/contact@ros_gz_interfaces/msg/Contacts[ignition.msgs.Contacts'
         ],
         output='screen'
     )
