@@ -38,7 +38,7 @@ class FollowerPassthroughDriver(Node):
 
         point = JointTrajectoryPoint()
         for i in range(len(msg.position)):
-            point.positions[i] = msg.position[i] - 3.14  # 180도 오프셋 적용
+            point.positions.append(msg.position[i] - 3.14)  # 180도 오프셋 적용
             if (i%10) == 7:
                 point.positions[i] = -msg.position[i]  # 그리퍼 각도 반전
         

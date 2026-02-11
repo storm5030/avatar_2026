@@ -51,7 +51,7 @@ class BridgeNode(Node):
         operation_mode = int(self.get_parameter('operation_mode').value)
 
         self.joint_names: List[str] = ["right_joint1", "right_joint2", "right_joint3", "right_joint4", "right_joint5", "right_joint6",
-                                       "left_joint1", "left_joint2", "left_joint3", "left_joint4", "left_joint5", "left_joint6"]
+                                       "right_joint_gripper"]
         #self.joint_names: List[str] = ["test_1", "test_2", "test_3", "test_4", "test_5"]
         self.joint_ids: List[int] = [11,12,13,14,15,16,17]
         #self.joint_ids: List[int] = [1,2,3,4,5]
