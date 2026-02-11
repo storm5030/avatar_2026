@@ -13,7 +13,7 @@
       <color rgba="1.0 1.0 1.0 1.0"/>
     </material>
 
-    <link name="base_link">
+    <link name="${prefix}base_link">
       <inertial>
         <origin xyz="1.197034860872733e-05 2.2046610134709234e-05 0.13090240145620716" rpy="0 0 0"/>
         <mass value="10.533144791374717"/>
@@ -26,7 +26,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}base_link_collision">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/base_link.stl" scale="0.01 0.01 0.01"/>
@@ -34,7 +34,7 @@
       </collision>
     </link>
 
-    <link name="left_link1_1">
+    <link name="${prefix}left_link1_1">
       <inertial>
         <origin xyz="3.2842893861874216e-09 0.0339438363239903 0.004338426588372579" rpy="0 0 0"/>
         <mass value="0.05267109101640789"/>
@@ -47,7 +47,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}left_link1_1_collision">
         <origin xyz="0.00025 -0.1025 -0.6155" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/left_link1_1.stl" scale="0.01 0.01 0.01"/>
@@ -55,7 +55,7 @@
       </collision>
     </link>
 
-    <link name="right_link1_1">
+    <link name="${prefix}right_link1_1">
       <inertial>
         <origin xyz="-3.2842893531192553e-09 -0.03394383632399016 0.004338426588372579" rpy="0 0 0"/>
         <mass value="0.05267109101640788"/>
@@ -68,7 +68,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}right_link1_1_collision">
         <origin xyz="-0.00025 0.1025 -0.6155" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/right_link1_1.stl" scale="0.01 0.01 0.01"/>
@@ -76,7 +76,7 @@
       </collision>
     </link>
 
-    <link name="neck_link1_1">
+    <link name="${prefix}neck_link1_1">
       <inertial>
         <origin xyz="-0.00030973850909889926 -0.014644333953918068 0.03569874341148194" rpy="0 0 0"/>
         <mass value="0.17638315081350112"/>
@@ -89,7 +89,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}neck_link1_1_collision">
         <origin xyz="-0.00025 -0.0194 -0.6478" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/neck_link1_1.stl" scale="0.01 0.01 0.01"/>
@@ -97,7 +97,7 @@
       </collision>
     </link>
 
-    <link name="neck_link2_1">
+    <link name="${prefix}neck_link2_1">
       <inertial>
         <origin xyz="0.013634139305983414 0.0007303949446386359 0.035430103721878825" rpy="0 0 0"/>
         <mass value="0.571131718488463"/>
@@ -110,7 +110,7 @@
         </geometry>
         <material name="white"/>
       </visual>
-      <collision>
+      <collision name="${prefix}neck_link2_1_collision">
         <origin xyz="-0.00025 -0.0004 -0.70755" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/neck_link2_1.stl" scale="0.01 0.01 0.01"/>
@@ -118,7 +118,7 @@
       </collision>
     </link>
 
-    <link name="left_link2_1">
+    <link name="${prefix}left_link2_1">
       <inertial>
         <origin xyz="-0.02738813477340827 0.0003646764139110803 -0.06351763830886736" rpy="0 0 0"/>
         <mass value="0.4119071163979643"/>
@@ -131,7 +131,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}left_link2_1_collision">
         <origin xyz="-0.02425 -0.1525 -0.6155" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/left_link2_1.stl" scale="0.01 0.01 0.01"/>
@@ -139,7 +139,7 @@
       </collision>
     </link>
 
-    <link name="left_link3_1">
+    <link name="${prefix}left_link3_1">
       <inertial>
         <origin xyz="-1.2092751239928777e-08 1.2973242757841064e-09 -0.026072371405695793" rpy="0 0 0"/>
         <mass value="0.050293199431630714"/>
@@ -152,7 +152,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}left_link3_1_collision">
         <origin xyz="0.00025 -0.1525 -0.45775" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/left_link3_1.stl" scale="0.01 0.01 0.01"/>
@@ -160,7 +160,7 @@
       </collision>
     </link>
 
-    <link name="left_link4_1">
+    <link name="${prefix}left_link4_1">
       <inertial>
         <origin xyz="-0.004070974019487877 -0.018903692607189798 -0.06334059246636403" rpy="0 0 0"/>
         <mass value="0.31397838075435874"/>
@@ -173,7 +173,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}left_link4_1_collision">
         <origin xyz="0.00025 -0.1715 -0.42625" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/left_link4_1.stl" scale="0.01 0.01 0.01"/>
@@ -181,7 +181,7 @@
       </collision>
     </link>
 
-    <link name="left_link5_1">
+    <link name="${prefix}left_link5_1">
       <inertial>
         <origin xyz="2.8685271546600392e-08 1.2810758009962342e-09 -0.017987620476692334" rpy="0 0 0"/>
         <mass value="0.02546967835110524"/>
@@ -194,7 +194,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}left_link5_1_collision">
         <origin xyz="0.00025 -0.1525 -0.28615" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/left_link5_1.stl" scale="0.01 0.01 0.01"/>
@@ -202,7 +202,7 @@
       </collision>
     </link>
 
-    <link name="left_link6_1">
+    <link name="${prefix}left_link6_1">
       <inertial>
         <origin xyz="0.00017312528224349425 -0.02085009010277386 -0.030500463697734653" rpy="0 0 0"/>
         <mass value="0.19487379537642757"/>
@@ -215,7 +215,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}left_link6_1_collision">
         <origin xyz="0.00025 -0.1715 -0.25465" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/left_link6_1.stl" scale="0.01 0.01 0.01"/>
@@ -223,7 +223,7 @@
       </collision>
     </link>
 
-    <link name="left_link_gripper_1">
+    <link name="${prefix}left_link_gripper_1">
       <inertial>
         <origin xyz="-0.022004443717257835 0.018430761900261827 -0.031128994083327033" rpy="0 0 0"/>
         <mass value="0.022581332723262154"/>
@@ -244,7 +244,7 @@
       </collision>
     </link>
 
-    <link name="right_link2_1">
+    <link name="${prefix}right_link2_1">
       <inertial>
         <origin xyz="-0.02727565185538715 -0.00036463615065041033 -0.06351762777052061" rpy="0 0 0"/>
         <mass value="0.4119072353618623"/>
@@ -257,7 +257,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}right_link2_1_collision">
         <origin xyz="-0.02475 0.1525 -0.6155" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/right_link2_1.stl" scale="0.01 0.01 0.01"/>
@@ -265,7 +265,7 @@
       </collision>
     </link>
 
-    <link name="right_link3_1">
+    <link name="${prefix}right_link3_1">
       <inertial>
         <origin xyz="-1.209275128617e-08 -1.2656755643547513e-09 -0.026072371405695682" rpy="0 0 0"/>
         <mass value="0.050293199431630714"/>
@@ -278,7 +278,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}right_link3_1_collision">
         <origin xyz="-0.00025 0.1525 -0.45775" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/right_link3_1.stl" scale="0.01 0.01 0.01"/>
@@ -286,7 +286,7 @@
       </collision>
     </link>
 
-    <link name="right_link4_1">
+    <link name="${prefix}right_link4_1">
       <inertial>
         <origin xyz="-0.0040709740464307306 0.018876725019776414 -0.06334059246636403" rpy="0 0 0"/>
         <mass value="0.31397838075435874"/>
@@ -299,7 +299,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}right_link4_1_collision">
         <origin xyz="-0.00025 0.1715 -0.42625" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/right_link4_1.stl" scale="0.01 0.01 0.01"/>
@@ -307,7 +307,7 @@
       </collision>
     </link>
 
-    <link name="right_link5_1">
+    <link name="${prefix}right_link5_1">
       <inertial>
         <origin xyz="2.8685270933538273e-08 -1.2819240391426234e-09 -0.01798762047669228" rpy="0 0 0"/>
         <mass value="0.02546967835110524"/>
@@ -320,7 +320,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}right_link5_1_collision">
         <origin xyz="-0.00025 0.1525 -0.28615" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/right_link5_1.stl" scale="0.01 0.01 0.01"/>
@@ -328,7 +328,7 @@
       </collision>
     </link>
 
-    <link name="right_link6_1">
+    <link name="${prefix}right_link6_1">
       <inertial>
         <origin xyz="0.00017312522335896592 0.020213672315239545 -0.03049306440428448" rpy="0 0 0"/>
         <mass value="0.19487379537642624"/>
@@ -341,7 +341,7 @@
         </geometry>
         <material name="dark_gray"/>
       </visual>
-      <collision>
+      <collision name="${prefix}right_link6_1_collision">
         <origin xyz="-0.00025 0.1715 -0.25465" rpy="0 0 0"/>
         <geometry>
           <mesh filename="file://$(find avatar_description)/meshes/follower/right_link6_1.stl" scale="0.01 0.01 0.01"/>
@@ -349,7 +349,7 @@
       </collision>
     </link>
 
-    <link name="right_link_gripper_1">
+    <link name="${prefix}right_link_gripper_1">
       <inertial>
         <origin xyz="-0.01899555242215849 -0.01843075902288205 -0.031128985762427674" rpy="0 0 0"/>
         <mass value="0.022581338744717485"/>
@@ -374,44 +374,44 @@
 
     <joint name="right_joint1" type="continuous">
       <origin xyz="0.00025 -0.1025 0.6155" rpy="0 0 0"/>
-      <parent link="base_link"/>
-      <child link="right_link1_1"/>
-      <axis xyz="0.0 -1.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}right_link1_1"/>
+      <axis xyz="-0.0 -1.0 0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
     <joint name="right_joint2" type="continuous">
       <origin xyz="0.0245 -0.05 0.0" rpy="0 0 0"/>
-      <parent link="right_link1_1"/>
-      <child link="right_link2_1"/>
-      <axis xyz="1.0 0.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <parent link="${prefix}right_link1_1"/>
+      <child link="${prefix}right_link2_1"/>
+      <axis xyz="-1.0 -0.0 0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
     <joint name="right_joint3" type="continuous">
       <origin xyz="-0.0245 0.0 -0.15775" rpy="0 0 0"/>
-      <parent link="right_link2_1"/>
-      <child link="right_link3_1"/>
-      <axis xyz="0.0 0.0 -1.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <parent link="${prefix}right_link2_1"/>
+      <child link="${prefix}right_link3_1"/>
+      <axis xyz="0.0 -0.0 -1.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
     <joint name="right_joint4" type="continuous">
       <origin xyz="0.0 -0.019 -0.0315" rpy="0 0 0"/>
-      <parent link="right_link3_1"/>
-      <child link="right_link4_1"/>
-      <axis xyz="0.0 -1.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <parent link="${prefix}right_link3_1"/>
+      <child link="${prefix}right_link4_1"/>
+      <axis xyz="0.0 1.0 -0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
     <joint name="right_joint5" type="continuous">
       <origin xyz="0.0 0.019 -0.1401" rpy="0 0 0"/>
-      <parent link="right_link4_1"/>
-      <child link="right_link5_1"/>
+      <parent link="${prefix}right_link4_1"/>
+      <child link="${prefix}right_link5_1"/>
       <axis xyz="0.0 0.0 -1.0"/>
       <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
       <dynamics damping="0.1" />
@@ -419,27 +419,27 @@
 
     <joint name="right_joint6" type="continuous">
       <origin xyz="0.0 -0.019 -0.0315" rpy="0 0 0"/>
-      <parent link="right_link5_1"/>
-      <child link="right_link6_1"/>
-      <axis xyz="0.0 -1.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <parent link="${prefix}right_link5_1"/>
+      <child link="${prefix}right_link6_1"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
     <joint name="right_joint_gripper" type="continuous">
       <origin xyz="0.019 0.007 -0.0495" rpy="0 0 0"/>
-      <parent link="right_link6_1"/>
-      <child link="right_link_gripper_1"/>
-      <axis xyz="1.0 0.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <parent link="${prefix}right_link6_1"/>
+      <child link="${prefix}right_link_gripper_1"/>
+      <axis xyz="1.0 -0.0 -0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
 
     <joint name="left_joint1" type="continuous">
       <origin xyz="-0.00025 0.1025 0.6155" rpy="0 0 0"/>
-      <parent link="base_link"/>
-      <child link="left_link1_1"/>
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}left_link1_1"/>
       <axis xyz="0.0 1.0 0.0"/>
       <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
       <dynamics damping="0.1" />
@@ -447,35 +447,35 @@
 
     <joint name="left_joint2" type="continuous">
       <origin xyz="0.0245 0.05 0.0" rpy="0 0 0"/>
-      <parent link="left_link1_1"/>
-      <child link="left_link2_1"/>
-      <axis xyz="1.0 0.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <parent link="${prefix}left_link1_1"/>
+      <child link="${prefix}left_link2_1"/>
+      <axis xyz="-1.0 -0.0 -0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
     <joint name="left_joint3" type="continuous">
       <origin xyz="-0.0245 0.0 -0.15775" rpy="0 0 0"/>
-      <parent link="left_link2_1"/>
-      <child link="left_link3_1"/>
-      <axis xyz="0.0 0.0 -1.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <parent link="${prefix}left_link2_1"/>
+      <child link="${prefix}left_link3_1"/>
+      <axis xyz="0.0 -0.0 -1.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
     <joint name="left_joint4" type="continuous">
       <origin xyz="0.0 0.019 -0.0315" rpy="0 0 0"/>
-      <parent link="left_link3_1"/>
-      <child link="left_link4_1"/>
-      <axis xyz="0.0 1.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <parent link="${prefix}left_link3_1"/>
+      <child link="${prefix}left_link4_1"/>
+      <axis xyz="-0.0 -1.0 0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
     <joint name="left_joint5" type="continuous">
       <origin xyz="0.0 -0.019 -0.1401" rpy="0 0 0"/>
-      <parent link="left_link4_1"/>
-      <child link="left_link5_1"/>
+      <parent link="${prefix}left_link4_1"/>
+      <child link="${prefix}left_link5_1"/>
       <axis xyz="0.0 0.0 -1.0"/>
       <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
       <dynamics damping="0.1" />
@@ -483,63 +483,376 @@
 
     <joint name="left_joint6" type="continuous">
       <origin xyz="0.0 0.019 -0.0315" rpy="0 0 0"/>
-      <parent link="left_link5_1"/>
-      <child link="left_link6_1"/>
-      <axis xyz="0.0 1.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <parent link="${prefix}left_link5_1"/>
+      <child link="${prefix}left_link6_1"/>
+      <axis xyz="-0.0 -1.0 -0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
     <joint name="left_joint_gripper" type="continuous">
       <origin xyz="0.019 -0.0086 -0.0495" rpy="0 0 0"/>
-      <parent link="left_link6_1"/>
-      <child link="left_link_gripper_1"/>
-      <axis xyz="1.0 0.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <parent link="${prefix}left_link6_1"/>
+      <child link="${prefix}left_link_gripper_1"/>
+      <axis xyz="1.0 -0.0 -0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
     
     <joint name="neck_joint1" type="continuous">
       <origin xyz="0.00025 0.0194 0.6478" rpy="0 0 0"/>
-      <parent link="base_link"/>
-      <child link="neck_link1_1"/>
-      <axis xyz="0.0 1.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}neck_link1_1"/>
+      <axis xyz="0.0 1.0 -0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
     <joint name="neck_joint2" type="continuous">
       <origin xyz="0.0 -0.019 0.05975" rpy="0 0 0"/>
-      <parent link="neck_link1_1"/>
-      <child link="neck_link2_1"/>
+      <parent link="${prefix}neck_link1_1"/>
+      <child link="${prefix}neck_link2_1"/>
       <axis xyz="0.0 0.0 1.0"/>
       <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
       <dynamics damping="0.1" />
     </joint>
 
-    <gazebo reference="left_link_gripper_1">
-      <sensor name="left_gripper_bumper" type="contact">
+    <!-- Contact sensors for collision detection -->
+    <gazebo reference="${prefix}base_link">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="base_link_bumper" type="contact">
         <always_on>true</always_on>
         <update_rate>50.0</update_rate>
         <contact>
-          <collision>${prefix}left_link_gripper_1_collision_collision</collision>
+          <collision>${prefix}base_link_collision</collision>
         </contact>
-        
         <plugin filename="libignition-gazebo-contact-system.so" 
                 name="ignition::gazebo::systems::Contact">
         </plugin>
       </sensor>
     </gazebo>
 
-    <gazebo reference="right_link_gripper_1">
+    <gazebo reference="${prefix}left_link1_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_link1_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link1_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link1_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="right_link1_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link1_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}neck_link1_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="neck_link1_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}neck_link1_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}neck_link2_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="neck_link2_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}neck_link2_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}left_link2_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_link2_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link2_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}left_link3_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_link3_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link3_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}left_link4_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_link4_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link4_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}left_link5_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_link5_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link5_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}left_link6_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_link6_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link6_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}left_link_gripper_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_gripper_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link_gripper_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link2_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="right_link2_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link2_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link3_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="right_link3_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link3_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link4_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="right_link4_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link4_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link5_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="right_link5_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link5_1_collision</collision> 
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link6_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="right_link6_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link6_1_collision</collision>
+        </contact>
+        <plugin filename="libignition-gazebo-contact-system.so" 
+                name="ignition::gazebo::systems::Contact">
+        </plugin>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link_gripper_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
       <sensor name="right_gripper_bumper" type="contact">
         <always_on>true</always_on>
         <update_rate>50.0</update_rate>
         <contact>
-          <collision>${prefix}right_link_gripper_1_collision_collision</collision>
+          <collision>${prefix}right_link_gripper_1_collision</collision>
         </contact>
-        
         <plugin filename="libignition-gazebo-contact-system.so" 
                 name="ignition::gazebo::systems::Contact">
         </plugin>

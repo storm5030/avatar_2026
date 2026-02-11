@@ -28,26 +28,26 @@
       </gazebo>
     </xacro:macro>
 
-    <xacro:Link reference="${prefix}link0"/>
-    <xacro:Link reference="${prefix}right_link1"/>
-    <xacro:Link reference="${prefix}right_link2"/>
-    <xacro:Link reference="${prefix}right_link3"/>
-    <xacro:Link reference="${prefix}right_link4"/>
-    <xacro:Link reference="${prefix}right_link5"/>
-    <xacro:Link reference="${prefix}right_link6"/>
-    <xacro:Link reference="${prefix}right_link_gripper"/>
+    <xacro:Link reference="base_link"/>
+    <xacro:Link reference="${prefix}right_link1_1"/>
+    <xacro:Link reference="${prefix}right_link2_1"/>
+    <xacro:Link reference="${prefix}right_link3_1"/>
+    <xacro:Link reference="${prefix}right_link4_1"/>
+    <xacro:Link reference="${prefix}right_link5_1"/>
+    <xacro:Link reference="${prefix}right_link6_1"/>
+    <xacro:Link reference="${prefix}right_link_gripper_1"/>
 
-    <xacro:Link reference="${prefix}left_link1"/>
-    <xacro:Link reference="${prefix}left_link2"/>
-    <xacro:Link reference="${prefix}left_link3"/>
-    <xacro:Link reference="${prefix}left_link4"/>
-    <xacro:Link reference="${prefix}left_link5"/>
-    <xacro:Link reference="${prefix}left_link6"/>
-    <xacro:Link reference="${prefix}left_link_gripper"/>
+    <xacro:Link reference="${prefix}left_link1_1"/>
+    <xacro:Link reference="${prefix}left_link2_1"/>
+    <xacro:Link reference="${prefix}left_link3_1"/>
+    <xacro:Link reference="${prefix}left_link4_1"/>
+    <xacro:Link reference="${prefix}left_link5_1"/>
+    <xacro:Link reference="${prefix}left_link6_1"/>
+    <xacro:Link reference="${prefix}left_link_gripper_1"/>
 
 
-    <xacro:Link reference="${prefix}neck_link1"/>
-    <xacro:Link reference="${prefix}neck_link2"/>
+    <xacro:Link reference="${prefix}neck_link1_1"/>
+    <xacro:Link reference="${prefix}neck_link2_1"/>
 
     <xacro:SimpleTransmission trans="${prefix}trans1" joint="${prefix}right_joint1" actuator="${prefix}actuator1" />
     <xacro:SimpleTransmission trans="${prefix}trans2" joint="${prefix}right_joint2" actuator="${prefix}actuator2" />
