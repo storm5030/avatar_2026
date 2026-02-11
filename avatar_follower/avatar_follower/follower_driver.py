@@ -37,7 +37,11 @@ class FollowerPassthroughDriver(Node):
         traj.joint_names = list(msg.name)
 
         point = JointTrajectoryPoint()
-        point.positions = list(msg.position)
+        for i in range(len(msg.position)):
+            point.positions[i] = msg.position[i] - 3.14  # 180도 오프셋 적용
+            if (i%10) == 7:
+                point.positions[i] = -msg.position[i]  # 그리퍼 각도 반전
+        
         point.time_from_start = Duration(sec=0, nanosec=20_000_000)  # 0.02s (50 Hz)
 
         traj.points = [point]
