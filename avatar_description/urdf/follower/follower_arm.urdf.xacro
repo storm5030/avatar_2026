@@ -50,7 +50,7 @@
       <collision name="${prefix}left_link1_1_collision">
         <origin xyz="0.00025 -0.1025 -0.6155" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link1_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -71,7 +71,7 @@
       <collision name="${prefix}right_link1_1_collision">
         <origin xyz="-0.00025 0.1025 -0.6155" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link1_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -92,7 +92,7 @@
       <collision name="${prefix}neck_link1_1_collision">
         <origin xyz="-0.00025 -0.0194 -0.6478" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/neck_link1_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -113,7 +113,7 @@
       <collision name="${prefix}neck_link2_1_collision">
         <origin xyz="-0.00025 -0.0004 -0.70755" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/neck_link2_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -134,7 +134,7 @@
       <collision name="${prefix}left_link2_1_collision">
         <origin xyz="-0.02425 -0.1525 -0.6155" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link2_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -155,7 +155,7 @@
       <collision name="${prefix}left_link3_1_collision">
         <origin xyz="0.00025 -0.1525 -0.45775" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link3_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -176,7 +176,7 @@
       <collision name="${prefix}left_link4_1_collision">
         <origin xyz="0.00025 -0.1715 -0.42625" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link4_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -197,7 +197,7 @@
       <collision name="${prefix}left_link5_1_collision">
         <origin xyz="0.00025 -0.1525 -0.28615" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link5_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -218,7 +218,7 @@
       <collision name="${prefix}left_link6_1_collision">
         <origin xyz="0.00025 -0.1715 -0.25465" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link6_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -239,7 +239,7 @@
       <collision name="${prefix}left_link_gripper_1_collision">
         <origin xyz="-0.01875 -0.1629 -0.20515" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link_gripper_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -260,7 +260,7 @@
       <collision name="${prefix}right_link2_1_collision">
         <origin xyz="-0.02475 0.1525 -0.6155" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link2_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -281,7 +281,7 @@
       <collision name="${prefix}right_link3_1_collision">
         <origin xyz="-0.00025 0.1525 -0.45775" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link3_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -302,7 +302,7 @@
       <collision name="${prefix}right_link4_1_collision">
         <origin xyz="-0.00025 0.1715 -0.42625" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link4_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -323,7 +323,7 @@
       <collision name="${prefix}right_link5_1_collision">
         <origin xyz="-0.00025 0.1525 -0.28615" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link5_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -344,7 +344,7 @@
       <collision name="${prefix}right_link6_1_collision">
         <origin xyz="-0.00025 0.1715 -0.25465" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link6_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -365,7 +365,7 @@
       <collision name="${prefix}right_link_gripper_1_collision">
         <origin xyz="-0.01925 0.1645 -0.20515" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.4" radius="0.05"/>        
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link_gripper_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
     </link>
