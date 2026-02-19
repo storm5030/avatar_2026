@@ -165,15 +165,15 @@ class BridgeNode(Node):
         positions[:4] = rad_after_cal
 
         rad_before_cal_l = positions[7:11]
-        rad_before_cal_l[0] = -rad_before_cal_l[0] + pi
+        rad_before_cal_l[0] = rad_before_cal_l[0] - pi
         rad_before_cal_l[1] = rad_before_cal_l[1] - pi
         rad_before_cal_l[2] = -rad_before_cal_l[2] + pi
-        rad_before_cal_l[3] = -rad_before_cal_l[3] + pi
+        rad_before_cal_l[3] = rad_before_cal_l[3] - pi
         rad_after_cal = self.calibrator.calibrate(rad_before_cal_l , side='left')
-        rad_after_cal[0] = -rad_before_cal_l[0] - pi
+        rad_after_cal[0] = rad_before_cal_l[0] + pi
         rad_after_cal[1] = rad_before_cal_l[1] + pi
         rad_after_cal[2] = -rad_before_cal_l[2] - pi
-        rad_after_cal[3] = -rad_before_cal_l[3] - pi
+        rad_after_cal[3] = rad_before_cal_l[3] + pi
         positions[7:11] = rad_after_cal
         
         for i in range(len(positions)):
