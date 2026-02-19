@@ -1,3 +1,4 @@
+from cmath import pi
 import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionClient
@@ -38,9 +39,12 @@ class FollowerPassthroughDriver(Node):
 
         point = JointTrajectoryPoint()
         for i in range(len(msg.position)):
-            point.positions.append(msg.position[i] - 3.14)  # 180도 오프셋 적용
-            if (i%10) == 7:
-                point.positions[i] = -msg.position[i]  # 그리퍼 각도 반전
+            point.positions.append(msg.position[i] - pi)  # 180도 오프셋 적용
+            if (msg.name[i]=="right_joint_gripper"):
+                point.positions[i] = - 2.0 * point.positions[i]  # 그리퍼 각도 반전
+            if (msg.name[i]=="left_joint_gripper"):
+                point.positions[i] = - 2.0 * point.positions[i]
+            
         
         point.time_from_start = Duration(sec=0, nanosec=20_000_000)  # 0.02s (50 Hz)
 
