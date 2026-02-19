@@ -54,7 +54,7 @@ class BridgeNode(Node):
 
         self.joint_names: List[str] = ["right_joint1", "right_joint2", "right_joint3", "right_joint4", "right_joint5", "right_joint6", "right_joint7"]
         #self.joint_names: List[str] = ["test_1", "test_2", "test_3", "test_4", "test_5"]
-        self.joint_ids: List[int] = [11,12,13,14,15,16,17]
+        self.joint_ids: List[int] = [11,12,13,14,15,16,17,21,22,23,24,25,26,27]
         #self.joint_ids: List[int] = [1,2,3,4,5]
 
         # 다이나믹셀 자체 sdk 속 포트 핸들러 패킷 핸들러 이용
@@ -152,17 +152,29 @@ class BridgeNode(Node):
             positions.append(float(rad_f))
 
 
-        rad_before_cal = positions[:4]
-        rad_before_cal[0] = -rad_before_cal[0] + pi
-        rad_before_cal[1] = rad_before_cal[1] - pi
-        rad_before_cal[2] = -rad_before_cal[2] + pi
-        rad_before_cal[3] = -rad_before_cal[3] + pi
-        rad_after_cal = self.calibrator.calibrate(rad_before_cal)
-        rad_after_cal[0] = -rad_before_cal[0] - pi
-        rad_after_cal[1] = rad_before_cal[1] + pi
-        rad_after_cal[2] = -rad_before_cal[2] - pi
-        rad_after_cal[3] = -rad_before_cal[3] - pi
+        rad_before_cal_r = positions[:4]
+        rad_before_cal_r[0] = -rad_before_cal_r[0] + pi
+        rad_before_cal_r[1] = rad_before_cal_r[1] - pi
+        rad_before_cal_r[2] = -rad_before_cal_r[2] + pi
+        rad_before_cal_r[3] = -rad_before_cal_r[3] + pi
+        rad_after_cal = self.calibrator.calibrate(rad_before_cal_r, side='right')
+        rad_after_cal[0] = -rad_before_cal_r[0] - pi
+        rad_after_cal[1] = rad_before_cal_r[1] + pi
+        rad_after_cal[2] = -rad_before_cal_r[2] - pi
+        rad_after_cal[3] = -rad_before_cal_r[3] - pi
         positions[:4] = rad_after_cal
+
+        rad_before_cal_l = positions[7:11]
+        rad_before_cal_l[0] = -rad_before_cal_l[0] + pi
+        rad_before_cal_l[1] = rad_before_cal_l[1] - pi
+        rad_before_cal_l[2] = -rad_before_cal_l[2] + pi
+        rad_before_cal_l[3] = -rad_before_cal_l[3] + pi
+        rad_after_cal = self.calibrator.calibrate(rad_before_cal_l , side='left')
+        rad_after_cal[0] = -rad_before_cal_l[0] - pi
+        rad_after_cal[1] = rad_before_cal_l[1] + pi
+        rad_after_cal[2] = -rad_before_cal_l[2] - pi
+        rad_after_cal[3] = -rad_before_cal_l[3] - pi
+        positions[7:11] = rad_after_cal
         
         for i in range(len(positions)):
             positions[i] = float(positions[i]) % (2 * math.pi)
