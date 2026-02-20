@@ -47,7 +47,7 @@ class YoloDeepSortSubscriber(Node):
         # 트래킹/디텍션 결과를 Detection2DArray로 퍼블리시
         self.det_pub = self.create_publisher(
             Detection2DArray,
-            '/yolo_deepsort/detections',
+            '/vision/detections',
             10
         )
         
@@ -55,28 +55,25 @@ class YoloDeepSortSubscriber(Node):
         # 같은 프레임에서 Detection2DArray의 detections[i]와 track_ids.data[i]를 매칭해서 쓰는 방식
         self.id_pub = self.create_publisher(
             Int32MultiArray,
-            '/yolo_deepsort/track_ids',
+            '/vision/track_ids',
             10
         )
         
         self.get_logger().info("YOLOv8 + DeepSORT 구독 노드 시작됨 (Topic: /realsense/color/image_raw/compressed)")
 
     def image_callback(self, msg):
-        # 1. 압축 이미지 메시지를 OpenCV 포맷으로 변환
-        # np_arr = np.frombuffer(msg.data, np.uint8)
-        # frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-        # 또는 cv_bridge를 사용하는 방법:
+        # 1) 압축 이미지 -> cv2
         try:
             frame = self.bridge.compressed_imgmsg_to_cv2(msg, desired_encoding='bgr8')
         except Exception as e:
             self.get_logger().error(f"이미지 변환 실패: {e}")
             return
 
-        # 2. YOLO 추론
+        # 2) YOLO 추론
         results = self.model.predict(
             frame,
             conf=self.conf_thres,
-            classes=self.target_classes,   
+            classes=self.target_classes,
             imgsz=416,
             verbose=False
         )[0]
@@ -91,42 +88,30 @@ class YoloDeepSortSubscriber(Node):
 
             x1, y1, x2, y2 = box.xyxy[0].tolist()
             w, h = x2 - x1, y2 - y1
-            class_name = self.model.names[cls_id]
-
             detections.append(([x1, y1, w, h], conf, cls_id))
 
-        # 3. DeepSORT 업데이트
+        # 3) DeepSORT 업데이트
         tracks = self.tracker.update_tracks(detections, frame=frame)
 
-        # 4. vision_msgs 퍼블리시 준비 
+        # 4) publish msg 준비
         det_arr = Detection2DArray()
-        det_arr.header = msg.header  # 원본 이미지 header 그대로 사용 (stamp/frame_id)
+        det_arr.header = msg.header
 
         track_ids_msg = Int32MultiArray()
         track_ids_msg.data = []
 
         H, W = frame.shape[:2]
+        cx_img, cy_img = W * 0.5, H * 0.5
 
+        # 5) confirmed 트랙 후보 수집 + 중앙거리 계산
+        candidates = []
         for t in tracks:
             if not t.is_confirmed():
                 continue
 
-            track_id = int(t.track_id)
-            label = t.get_det_class()  # class_name (문자열) 들어옴
-            conf = 0.0
-            raw_conf = getattr(t, "det_conf", None)
-            if raw_conf is not None:
-                conf = float(raw_conf)
-            else:
-                last_det = getattr(t, "last_detection", None)
-                if last_det is not None:
-                    maybe = getattr(last_det, "confidence", None)
-                    if maybe is not None:
-                        conf = float(maybe)
-
             x1, y1, x2, y2 = map(float, t.to_ltrb())
 
-            # clamp (이미지 밖으로 나갈 수 있어서)
+            # clamp
             x1 = max(0.0, min(x1, W - 1.0))
             x2 = max(0.0, min(x2, W - 1.0))
             y1 = max(0.0, min(y1, H - 1.0))
@@ -134,48 +119,70 @@ class YoloDeepSortSubscriber(Node):
 
             w = max(0.0, x2 - x1)
             h = max(0.0, y2 - y1)
+            if w <= 1.0 or h <= 1.0:
+                continue
 
-            # Detection2D 하나 만들기
-            det = Detection2D()
-            det.header = msg.header  # 개별 det에도 header 넣어줌
+            cx = x1 + w * 0.5
+            cy = y1 + h * 0.5
+            dist2 = (cx - cx_img) ** 2 + (cy - cy_img) ** 2
 
-            # BoundingBox2D: center(x,y) + size_x/size_y
-            bbox = BoundingBox2D()
+            candidates.append((dist2, t, x1, y1, x2, y2, w, h))
 
-            bbox.center.position.x = float(x1 + w / 2.0)
-            bbox.center.position.y = float(y1 + h / 2.0)
-            bbox.center.theta = 0.0
+        # 후보 없으면 빈 publish + 화면만
+        if not candidates:
+            self.det_pub.publish(det_arr)
+            self.id_pub.publish(track_ids_msg)
+            cv2.imshow("YOLOv8 + DeepSORT (RealSense)", frame)
+            cv2.waitKey(1)
+            return
 
-            bbox.size_x = float(w)
-            bbox.size_y = float(h)
-            det.bbox = bbox
+        # 6) 중앙에 가장 가까운 1개 선택
+        candidates.sort(key=lambda x: x[0])
+        _, best_t, x1, y1, x2, y2, w, h = candidates[0]
 
-            # 결과 hypothesis (ObjectHypothesisWithPose)
-            # NOTE: vision_msgs의 class_id는 string인 버전이 일반적임 (ROS2 Humble 기준)
-            hyp = ObjectHypothesisWithPose()
-            hyp.hypothesis.class_id = str(label)   # "person" 같은 문자열
-            hyp.hypothesis.score = conf if conf > 0.0 else 0.0
-            # pose는 안 쓰면 기본값 유지 (orientation/position)
+        track_id = int(best_t.track_id)
+        label = best_t.get_det_class()
 
-            det.results.append(hyp)
+        # conf 추출
+        conf = 0.0
+        raw_conf = getattr(best_t, "det_conf", None)
+        if raw_conf is not None:
+            conf = float(raw_conf)
+        else:
+            last_det = getattr(best_t, "last_detection", None)
+            if last_det is not None:
+                maybe = getattr(last_det, "confidence", None)
+                if maybe is not None:
+                    conf = float(maybe)
 
-            det_arr.detections.append(det)
-            track_ids_msg.data.append(track_id)
+        # 7) Detection2D 1개만 채우기
+        det = Detection2D()
+        det.header = msg.header
 
-            # 5. 시각화
-            xi1, yi1, xi2, yi2 = map(int, [x1, y1, x2, y2])
-            cv2.rectangle(frame, (xi1, yi1), (xi2, yi2), (0, 255, 0), 2)
-            cv2.putText(
-                frame,
-                f"ID {track_id} | {label}",
-                (xi1, yi1 - 7),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.6,
-                (0, 255, 0),
-                2
-            )
+        bbox = BoundingBox2D()
+        bbox.center.position.x = float(x1 + w / 2.0)
+        bbox.center.position.y = float(y1 + h / 2.0)
+        bbox.center.theta = 0.0
+        bbox.size_x = float(w)
+        bbox.size_y = float(h)
+        det.bbox = bbox
 
-        # 6. 퍼블리시 및 화면 출력
+        hyp = ObjectHypothesisWithPose()
+        hyp.hypothesis.class_id = str(label)
+        hyp.hypothesis.score = conf if conf > 0.0 else 0.0
+        det.results.append(hyp)
+
+        det_arr.detections.append(det)
+        track_ids_msg.data.append(track_id)
+
+        # 8) 시각화 (1개만)
+        xi1, yi1, xi2, yi2 = map(int, [x1, y1, x2, y2])
+        cv2.rectangle(frame, (xi1, yi1), (xi2, yi2), (0, 255, 0), 2)
+        cv2.putText(frame, f"BEST ID {track_id} | {label}",
+                    (xi1, yi1 - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+        cv2.circle(frame, (int(cx_img), int(cy_img)), 5, (255, 255, 255), -1)
+
+        # 9) publish + show
         self.det_pub.publish(det_arr)
         self.id_pub.publish(track_ids_msg)
 

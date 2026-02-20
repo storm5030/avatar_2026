@@ -27,13 +27,13 @@ class AnglePublisher(Node):
         # ===== 구독 =====
         self.det_sub = self.create_subscription(
             Detection2DArray,
-            "/yolo_deepsort/detections",
+            "/vision/detections",
             self.det_callback,
             10
         )
         self.id_sub = self.create_subscription(
             Int32MultiArray,
-            "/yolo_deepsort/track_ids",
+            "/vision/track_ids",
             self.id_callback,
             10
         )

@@ -27,6 +27,7 @@ setup(
             'rgb_subscriber = avatar_vision.rgb_sub:main',
             'realsense_rgb_publisher = avatar_vision.camera_pub:main',
             'tracker_node = avatar_vision.tracker_node:main',
+            'hand_tracker = avatar_vision.hand_tracker_node:main',
             'angle_pub = avatar_vision.angle_pub:main',
             'webcam_publisher = avatar_vision_etc.webcam_publisher:main',
             'yolo_deepsort_subscriber = avatar_vision_etc.webcam_pub_and_tracker:main',
