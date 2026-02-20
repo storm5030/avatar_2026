@@ -25,12 +25,12 @@ setup(
     entry_points={
         'console_scripts': [
             'rgb_subscriber = avatar_vision.rgb_sub:main',
-            'realsense_rgb_publisher = avatar_vision.camera_test:main',
-            'hand_node = avatar_vision.hand_node:main',
+            'realsense_rgb_publisher = avatar_vision.camera_pub:main',
             'tracker_node = avatar_vision.tracker_node:main',
-            'webcam_publisher = avatar_vision.webcam_publisher:main',
-            'yolo_deepsort_subscriber = avatar_vision.webcam_pub_and_tracker:main',
-            'det_cxcy_node = avatar_vision.det_cxcy_node:main',
+            'angle_pub = avatar_vision.angle_pub:main',
+            'webcam_publisher = avatar_vision_etc.webcam_publisher:main',
+            'yolo_deepsort_subscriber = avatar_vision_etc.webcam_pub_and_tracker:main',
+            'hand_node = avatar_vision_etc.hand_node:main',
         ],
     },
 )

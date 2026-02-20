@@ -12,7 +12,8 @@ class YoloDeepSortNode(Node):
 
         # ===== 설정 =====
         self.source = 0
-        self.target_classes = None  # [0] 이면 사람만 🙂
+        self.conf_thres = 0.35  # ✅ 누락되어 있던 confidence threshold 추가
+        self.target_classes = None  # 예: [0] 이면 사람만
 
         # ===== 모델 로드 =====
         self.model = YOLO("yolov8n.pt")
@@ -37,33 +38,46 @@ class YoloDeepSortNode(Node):
             self.get_logger().warn("프레임 수신 실패")
             return
 
+        # ✅ YOLO 추론
         results = self.model.predict(
             frame, conf=self.conf_thres, verbose=False
         )[0]
 
-        # print(f"YOLO Detections: {len(results.boxes)}") # 디버그용 출력
-
+        # ✅ DeepSORT 입력 detections 만들기
+        # deep_sort_realtime 형식: ( [x, y, w, h], confidence, class )
         detections = []
         for box in results.boxes:
             conf = float(box.conf[0])
-            cls_id = int(box.cls[0])src/avatar_2026_Vision/avatar_vision/avatar_vision/tracker.py
+            cls_id = int(box.cls[0])  # ✅ 여기 뒤에 끼어든 파일경로 텍스트 제거됨
+
+            # 클래스 필터링 옵션
+            if self.target_classes is not None and cls_id not in self.target_classes:
+                continue
+
+            x1, y1, x2, y2 = box.xyxy[0].tolist()
+            x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
+            w = x2 - x1
+            h = y2 - y1
+
+            detections.append(([x1, y1, w, h], conf, cls_id))
+
+        # ✅ 트래커 업데이트
         tracks = self.tracker.update_tracks(detections, frame=frame)
 
-        # print(f"Active Tracks: {len(tracks)}") # 디버그용 출력
-
+        # ✅ 시각화
         for t in tracks:
             if not t.is_confirmed():
                 continue
 
             track_id = t.track_id
             x1, y1, x2, y2 = map(int, t.to_ltrb())
-            label = t.get_det_class()
+            label = t.get_det_class()  # 우리가 cls_id 넣었으니 보통 숫자로 나옴
 
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
             cv2.putText(
                 frame,
-                f"ID {track_id} | {label}",
-                (x1, y1 - 7),
+                f"ID {track_id} | CLS {label}",
+                (x1, max(0, y1 - 7)),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.6,
                 (0, 255, 0),
@@ -77,12 +91,16 @@ class YoloDeepSortNode(Node):
 def main():
     rclpy.init()
     node = YoloDeepSortNode()
-    rclpy.spin(node)
 
-    node.cap.release()
-    cv2.destroyAllWindows()
-    node.destroy_node()
-    rclpy.shutdown()
+    try:
+        rclpy.spin(node)
+    finally:
+        # ✅ 종료 처리 안전하게
+        if hasattr(node, "cap") and node.cap is not None:
+            node.cap.release()
+        cv2.destroyAllWindows()
+        node.destroy_node()
+        rclpy.shutdown()
 
 
 if __name__ == "__main__":
