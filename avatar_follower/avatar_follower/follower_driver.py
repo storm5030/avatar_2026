@@ -6,6 +6,8 @@ from sensor_msgs.msg import JointState
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from builtin_interfaces.msg import Duration
 from control_msgs.action import FollowJointTrajectory
+from std_msgs.msg import Int32MultiArray, Float32MultiArray
+
 
 class FollowerPassthroughDriver(Node):
     def __init__(self):
@@ -26,8 +28,8 @@ class FollowerPassthroughDriver(Node):
         )
 
         self.vision_sub = self.create_subscription(
-            JointState,
-            '/vision',
+            Float32MultiArray,
+            '/avatar/target_angles',
             self.vision_callback,
             10
         )
@@ -64,10 +66,20 @@ class FollowerPassthroughDriver(Node):
         # 비동기적으로 목표 전송
         self._action_client.send_goal_async(goal_msg)
 
-    def vision_callback(self, msg: JointState):
+    def vision_callback(self, msg: Float32MultiArray):
         # Vision 데이터를 처리하는 로직을 여기에 추가할 수 있습니다.
         # 예시로, Vision 데이터를 로그로 출력합니다.
-        self.get_logger().info(f'Received vision data: {msg}')
+
+        
+        traj = JointTrajectory()
+        traj.joint_names = list(["neck_joint_1", "neck_joint_2"])
+        traj.points = [msg.data[2], msg.data[1]]
+        
+        goal_msg = FollowJointTrajectory.Goal()
+        goal_msg.trajectory = traj
+
+        # 비동기적으로 목표 전송
+        self._action_client.send_goal_async(goal_msg)
         
 
 def main(args=None):
