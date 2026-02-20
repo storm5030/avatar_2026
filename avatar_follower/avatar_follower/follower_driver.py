@@ -73,10 +73,13 @@ class FollowerPassthroughDriver(Node):
         traj.points = [JointTrajectoryPoint()]
         pitch = -msg.data[2]
         yaw = -msg.data[1]
-        if abs(pitch) > 0.3:
-            pitch = 0.3 * (pitch / abs(pitch))  # 최대 ±0.3 라디안으로 제한
-        if abs(yaw) > 0.3:
-            yaw = 0.3 * (yaw / abs(yaw))  # 최대 ±0.3 라디안으로 제한
+        min_pitch = 0.01 
+        min_yaw = 0.05  # 최소 각도 (0.05 라디안 = 약 2.86도)
+        if abs(pitch) > min_pitch:
+            pitch = min_pitch * (pitch / abs(pitch))  
+        if abs(yaw) > min_yaw:
+            yaw = min_yaw * (yaw / abs(yaw))  
+      
         traj.points[0].positions = [pitch, yaw]
         traj.points[0].time_from_start = Duration(sec=0, nanosec=20_000_000)  # 0.02s (50 Hz)
         
