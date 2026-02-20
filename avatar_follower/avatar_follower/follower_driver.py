@@ -24,6 +24,13 @@ class FollowerPassthroughDriver(Node):
             self.leader_callback,
             10
         )
+
+        self.vision_sub = self.create_subscription(
+            JointState,
+            '/vision',
+            self.vision_callback,
+            10
+        )
         
         self.get_logger().info('Follower Passthrough Driver Node has been started.')
 
@@ -56,6 +63,12 @@ class FollowerPassthroughDriver(Node):
 
         # 비동기적으로 목표 전송
         self._action_client.send_goal_async(goal_msg)
+
+    def vision_callback(self, msg: JointState):
+        # Vision 데이터를 처리하는 로직을 여기에 추가할 수 있습니다.
+        # 예시로, Vision 데이터를 로그로 출력합니다.
+        self.get_logger().info(f'Received vision data: {msg}')
+        
 
 def main(args=None):
     rclpy.init(args=args)
