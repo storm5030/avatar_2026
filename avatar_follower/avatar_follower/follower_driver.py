@@ -6,7 +6,7 @@ from sensor_msgs.msg import JointState
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from builtin_interfaces.msg import Duration
 from control_msgs.action import FollowJointTrajectory
-from std_msgs.msg import Int32MultiArray, Float32MultiArray
+from std_msgs.msg import Float32MultiArray
 
 
 class FollowerPassthroughDriver(Node):
@@ -66,20 +66,28 @@ class FollowerPassthroughDriver(Node):
         # 비동기적으로 목표 전송
         self._action_client.send_goal_async(goal_msg)
 
-    def vision_callback(self, msg: Float32MultiArray):
-        # Vision 데이터를 처리하는 로직을 여기에 추가할 수 있습니다.
-        # 예시로, Vision 데이터를 로그로 출력합니다.
-
-        
+    def vision_callback(self, msg: Float32MultiArray):   
+        # rate = 5.0 # 각도 조절 비율 (값이 클수록 더 작은 각도로 변환)     
         traj = JointTrajectory()
-        traj.joint_names = list(["neck_joint_1", "neck_joint_2"])
-        traj.points = [msg.data[2], msg.data[1]]
+        traj.joint_names = list(["neck_joint1", "neck_joint2"])
+        traj.points = [JointTrajectoryPoint()]
+        pitch = -msg.data[2]
+        yaw = -msg.data[1]
+        min_pitch = 0.01 
+        min_yaw = 0.05  # 최소 각도 (0.05 라디안 = 약 2.86도)
+        if abs(pitch) > min_pitch:
+            pitch = min_pitch * (pitch / abs(pitch))  
+        if abs(yaw) > min_yaw:
+            yaw = min_yaw * (yaw / abs(yaw))  
+        traj.points[0].positions = [pitch, yaw]
+        traj.points[0].time_from_start = Duration(sec=0, nanosec=20_000_000)  # 0.02s (50 Hz)
         
         goal_msg = FollowJointTrajectory.Goal()
         goal_msg.trajectory = traj
 
         # 비동기적으로 목표 전송
         self._action_client.send_goal_async(goal_msg)
+        self.get_logger().info(f"Received vision angles: {msg.data}, sent to action server.")
         
 
 def main(args=None):

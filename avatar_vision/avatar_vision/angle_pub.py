@@ -16,10 +16,10 @@ class AnglePublisher(Node):
 
         # 2. Realsense Intrinsic 파라미터 (D435/D455 기본값 예시)
         # 실제 정확한 값은 'rs-enumerate-devices -c' 또는 카메라 토픽(/camera/camera_info)에서 확인 필요
-        self.fx = 608.78759765625  # Focal length x
-        self.fy = 609.2583618164062  # Focal length y
-        self.ppx = 322.2633361816406 # Principal point x (Center)
-        self.ppy = 250.86358642578125 # Principal point y (Center)
+        self.fx = 615.1111450195312  # Focal length x
+        self.fy = 615.2798461914062  # Focal length y
+        self.ppx = 318.12139892578125 # Principal point x (Center)
+        self.ppy = 250.6387481689453 # Principal point y (Center)
         
         self.latest_detections = None
         self.latest_track_ids = None
