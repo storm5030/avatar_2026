@@ -4,6 +4,7 @@ from launch.actions import TimerAction, ExecuteProcess, RegisterEventHandler, Se
 from launch.event_handlers import OnProcessExit
 from launch_ros.actions import Node
 from launch.substitutions import Command, PathJoinSubstitution
+from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
 
@@ -24,11 +25,14 @@ def generate_launch_description():
 
     # 1. Robot Description 생성 (use_sim:=true로 설정해야 가제보 플러그인 사용)
     # 주의: xacro 파일 내부에서 $(arg use_sim)을 처리하도록 되어 있어야 합니다.
-    robot_description_content = Command([
-        'xacro ', xacro_file,
-        ' use_sim:=true',             # 시뮬레이션 모드 ON
-        ' use_mock_hardware:=false'   # Mock 하드웨어 OFF (가제보가 하드웨어임)
-    ])
+    robot_description_content = ParameterValue(
+        Command([
+            'xacro ', xacro_file,
+            ' use_sim:=true',             # 시뮬레이션 모드 ON
+            ' use_mock_hardware:=false'   # Mock 하드웨어 OFF (가제보가 하드웨어임)
+        ]),
+        value_type=str
+    )
     
     robot_description = {'robot_description': robot_description_content}
 

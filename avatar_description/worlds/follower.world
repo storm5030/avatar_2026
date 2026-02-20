@@ -19,8 +19,12 @@
             name="gz::sim::systems::UserCommands"/>
     <plugin filename="gz-sim-scene-broadcaster-system"
             name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system"
+            name="gz::sim::systems::Sensors"/>
     <plugin filename="libignition-gazebo-imu-system.so"
             name="ignition::gazebo::systems::Imu"/>
+    <plugin filename="libignition-gazebo-contact-system.so"
+        name="ignition::gazebo::systems::Contact"/>
 
     <!-- 조명 -->
     <light type="directional" name="sun">
