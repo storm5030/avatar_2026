@@ -53,7 +53,7 @@ class WebcamPublisher(Node):
         self.publisher.publish(msg)
 
         # 로컬 확인용
-        cv2.imshow('Webcam View', frame)
+        # cv2.imshow('Webcam View', frame)
         cv2.waitKey(1)
 
     def destroy_node(self):
