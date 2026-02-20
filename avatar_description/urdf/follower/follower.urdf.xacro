@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot name="follower" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
   <xacro:arg name="prefix" default="" />
   <xacro:arg name="use_sim" default="false" />
   <xacro:arg name="use_mock_hardware" default="false" />
@@ -16,7 +17,7 @@
 
   <joint name="$(arg prefix)world_fixed" type="fixed">
     <parent link="world"/>
-    <child link="$(arg prefix)link0"/>
+    <child link="$(arg prefix)base_link"/>
     <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
   </joint>
 
@@ -48,5 +49,11 @@
     use_mock_hardware="$(arg use_mock_hardware)"
     mock_sensor_commands="$(arg mock_sensor_commands)"
     port_name="$(arg port_name)"/>
+    
+  <gazebo>
+    <plugin filename="libign_ros2_control-system.so" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+      <parameters>$(find avatar_bringup)/config/follower/hardware_controller_manager.yaml</parameters>
+    </plugin>
+  </gazebo>
 
 </robot>

@@ -1,518 +1,521 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="follower" params="prefix">
-    <!-- <xacro:property name="pi" value="3.1415926535" /> -->
+    <material name="black">
+      <color rgba="0.0 0.0 0.0 1.0"/>
+    </material>
 
-    <xacro:property name="robot_thickness" value="0.08" />
-    <xacro:property name="body_height" value="0.5" />
-    <xacro:property name="body_width" value="0.4" />
-    <xacro:property name="arm1_height" value="0.15"/>
-    <xacro:property name="arm2_height" value="0.10"/>
-    <xacro:property name="gripper_height" value="0.05"/>
+    <material name="dark_gray">
+      <color rgba="0.2 0.2 0.2 1.0"/>
+    </material>
 
-    <!-- link0 -->
-    <link name="${prefix}link0" >
+    <material name="white">
+      <color rgba="1.0 1.0 1.0 1.0"/>
+    </material>
+
+    <link name="${prefix}base_link">
+      <inertial>
+        <origin xyz="1.197034860872733e-05 2.2046610134709234e-05 0.13090240145620716" rpy="0 0 0"/>
+        <mass value="10.533144791374717"/>
+        <inertia ixx="0.529558" iyy="0.526156" izz="0.107055" ixy="8e-06" iyz="-0.000118" ixz="-6.1e-05"/>
+      </inertial>
       <visual>
-        <origin xyz="0 0 ${body_height/2}" rpy="0 0 0" />
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <box size="${body_width} ${robot_thickness} ${body_height}" />
-          <!-- <mesh filename="${meshes_file_direction}/follower_01_base.stl" scale="0.001 0.001 0.001" /> -->
+          <mesh filename="file://$(find avatar_description)/meshes/follower/base_link.stl" scale="0.01 0.01 0.01"/>
         </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
+        <material name="dark_gray"/>
       </visual>
       <collision>
-        <origin xyz="0 0 ${body_height/2}" rpy="0 0 0" />
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <box size="${body_width} ${robot_thickness} ${body_height}" />
+          <mesh filename="file://$(find avatar_description)/meshes/follower/base_link.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
-      <inertial>
-        <origin xyz="0 0 0" />
-        <mass value="2.0e-1" />
-        <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4" />
-      </inertial>
     </link>
-    <!-- right arm -->
-    <!-- joint1 -->
-    <joint name="${prefix}right_joint1" type="revolute">
-      <parent link="${prefix}link0" />
-      <child link="${prefix}right_link1" />
-      <origin xyz="${body_width/2} 0 ${body_height - robot_thickness/2}" rpy="0 0 0" />
-      <axis xyz="1 0 0" />
-      <limit velocity="4.8" effort="1000" lower="${-pi}" upper="${pi}" />
-      <dynamics damping="0.05" />
-    </joint>
 
-    <!-- link1 -->
-    <link name="${prefix}right_link1" >
+    <link name="${prefix}left_link1_1">
+      <inertial>
+        <origin xyz="3.2842893861874216e-09 0.0339438363239903 0.004338426588372579" rpy="0 0 0"/>
+        <mass value="0.05267109101640789"/>
+        <inertia ixx="3.3e-05" iyy="3.2e-05" izz="4.1e-05" ixy="0.0" iyz="-4e-06" ixz="0.0"/>
+      </inertial>
       <visual>
-        <origin xyz="${robot_thickness/2} 0 0" rpy="${pi/2} 0 0" />
+        <origin xyz="0.00025 -0.1025 -0.6155" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link1_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
+        <material name="dark_gray"/>
       </visual>
-      <collision>
-        <origin xyz="${robot_thickness/2} 0 0" rpy="${pi/2} 0 0" />
+       <collision>
+        <origin xyz="0.00025 -0.1025 -0.6155" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link1_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="1.0e-1" />
-        <inertia ixx="5e-5" ixy="0" ixz="0" iyy="5e-5" iyz="0" izz="1e-5" />
-      </inertial>
     </link>
 
-    <!-- joint2 -->
-    <joint name="${prefix}right_joint2" type="revolute">
-      <parent link="${prefix}right_link1" />
-      <child link="${prefix}right_link2" />
-      <origin xyz="${robot_thickness/2} 0 0" rpy="0 0 0" />
-      <axis xyz="0 1 0" />
-      <limit velocity="4.8" effort="1000" lower="${-pi}" upper="${pi/2}" />
-      <dynamics damping="0.1" />
-    </joint>
-
-    <!-- link2 -->
-    <link name="${prefix}right_link2" >
+    <link name="${prefix}right_link1_1">
+      <inertial>
+        <origin xyz="-3.2842893531192553e-09 -0.03394383632399016 0.004338426588372579" rpy="0 0 0"/>
+        <mass value="0.05267109101640788"/>
+        <inertia ixx="3.3e-05" iyy="3.2e-05" izz="4.1e-05" ixy="0.0" iyz="4e-06" ixz="-0.0"/>
+      </inertial>
       <visual>
-        <origin xyz="0 0 ${-robot_thickness/2 - arm1_height/2}" rpy="0 0 0" />
+        <origin xyz="-0.00025 0.1025 -0.6155" rpy="0 0 0"/>
         <geometry>
-          <box size="${robot_thickness} ${robot_thickness} ${arm1_height}" />
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link1_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
+        <material name="dark_gray"/>
       </visual>
-      <collision>
-        <origin xyz="0 0 ${-robot_thickness/2 - arm1_height/2}" rpy="0 0 0" />
+       <collision>
+        <origin xyz="-0.00025 0.1025 -0.6155" rpy="0 0 0"/>
         <geometry>
-          <box size="${robot_thickness} ${robot_thickness} ${arm1_height}" />
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link1_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="8.0e-2" />
-        <inertia ixx="4e-5" ixy="0" ixz="0" iyy="4e-5" iyz="0" izz="8e-6" />
-      </inertial>
     </link>
 
-    <!-- joint3 -->
-    <joint name="${prefix}right_joint3" type="revolute">
-      <parent link="${prefix}right_link2" />
-      <child link="${prefix}right_link3" />
-      <origin xyz="0 0 ${-arm1_height - robot_thickness/2}" rpy="0 0 0" />
-      <axis xyz="0 0 -1" />
-      <limit velocity="4.8" effort="1000" lower="${-pi/2}" upper="${pi/2}" />
-      <dynamics damping="0.1" />
-    </joint>
-
-    <!-- link3 -->
-    <link name="${prefix}right_link3" >
+    <link name="${prefix}neck_link1_1">
+      <inertial>
+        <origin xyz="-0.00030973850909889926 -0.014644333953918068 0.03569874341148194" rpy="0 0 0"/>
+        <mass value="0.17638315081350112"/>
+        <inertia ixx="0.000175" iyy="0.000123" izz="0.00019" ixy="-0.0" iyz="-4e-06" ixz="1e-06"/>
+      </inertial>
       <visual>
-        <origin xyz="0 0 ${-robot_thickness/2}" rpy="${pi/2} 0 ${pi/2}" />
+        <origin xyz="-0.00025 -0.0194 -0.6478" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/neck_link1_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
+        <material name="dark_gray"/>
       </visual>
-      <collision>
-        <origin xyz="0 0 ${-robot_thickness/2}" rpy="${pi/2} 0 ${pi/2}" />
+       <collision>
+        <origin xyz="-0.00025 -0.0194 -0.6478" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/neck_link1_1.stl" scale="0.01 0.01 0.01"/>
         </geometry>
       </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="1.0e-1" />
-        <inertia ixx="5e-5" ixy="0" ixz="0" iyy="5e-5" iyz="0" izz="1e-5" />
-      </inertial>
     </link>
 
-    <!-- joint4 -->
-    <joint name="${prefix}right_joint4" type="revolute">
-      <parent link="${prefix}right_link3" />
-      <child link="${prefix}right_link4" />
-      <origin xyz="0 0 ${-robot_thickness/2}" rpy="0 0 0" />
-      <axis xyz="1 0 0" />
-      <limit velocity="4.8" effort="1000" lower="0" upper="${pi}" />
-      <dynamics damping="0.1" />
-    </joint>
+    <link name="${prefix}neck_link2_1">
+      <inertial>
+        <origin xyz="0.013634139305983414 0.0007303949446386359 0.035430103721878825" rpy="0 0 0"/>
+        <mass value="0.571131718488463"/>
+        <inertia ixx="0.000802" iyy="0.000388" izz="0.000903" ixy="0.0" iyz="0.0" ixz="-2e-06"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.00025 -0.0004 -0.70755" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/neck_link2_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+       <collision>
+        <origin xyz="-0.00025 -0.0004 -0.70755" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/neck_link2_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}left_link2_1">
+      <inertial>
+        <origin xyz="-0.02738813477340827 0.0003646764139110803 -0.06351763830886736" rpy="0 0 0"/>
+        <mass value="0.4119071163979643"/>
+        <inertia ixx="0.001331" iyy="0.001381" izz="0.000168" ixy="-0.0" iyz="-8e-06" ixz="-9.7e-05"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.02425 -0.1525 -0.6155" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link2_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+       <collision>
+        <origin xyz="-0.02425 -0.1525 -0.6155" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link2_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}left_link3_1">
+      <inertial>
+        <origin xyz="-1.2092751239928777e-08 1.2973242757841064e-09 -0.026072371405695793" rpy="0 0 0"/>
+        <mass value="0.050293199431630714"/>
+        <inertia ixx="3.7e-05" iyy="2.3e-05" izz="3.4e-05" ixy="0.0" iyz="-0.0" ixz="0.0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.00025 -0.1525 -0.45775" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link3_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+       <collision>
+        <origin xyz="0.00025 -0.1525 -0.45775" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link3_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}left_link4_1">
+      <inertial>
+        <origin xyz="-0.004070974019487877 -0.018903692607189798 -0.06334059246636403" rpy="0 0 0"/>
+        <mass value="0.31397838075435874"/>
+        <inertia ixx="0.000908" iyy="0.000935" izz="0.000116" ixy="-0.0" iyz="-2e-06" ixz="-7.3e-05"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.00025 -0.1715 -0.42625" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link4_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+       <collision>
+        <origin xyz="0.00025 -0.1715 -0.42625" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link4_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}left_link5_1">
+      <inertial>
+        <origin xyz="2.8685271546600392e-08 1.2810758009962342e-09 -0.017987620476692334" rpy="0 0 0"/>
+        <mass value="0.02546967835110524"/>
+        <inertia ixx="1.2e-05" iyy="7e-06" izz="1.1e-05" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.00025 -0.1525 -0.28615" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link5_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+       <collision>
+        <origin xyz="0.00025 -0.1525 -0.28615" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link5_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}left_link6_1">
+      <inertial>
+        <origin xyz="0.00017312528224349425 -0.02085009010277386 -0.030500463697734653" rpy="0 0 0"/>
+        <mass value="0.19487379537642757"/>
+        <inertia ixx="0.000139" iyy="0.00013" izz="5.7e-05" ixy="-0.0" iyz="-1.4e-05" ixz="1e-06"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.00025 -0.1715 -0.25465" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link6_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+       <collision>
+        <origin xyz="0.00025 -0.1715 -0.25465" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link6_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}left_link_gripper_1">
+      <inertial>
+        <origin xyz="-0.022004443717257835 0.018430761900261827 -0.031128994083327033" rpy="0 0 0"/>
+        <mass value="0.022581332723262154"/>
+        <inertia ixx="1.9e-05" iyy="2.8e-05" izz="1.2e-05" ixy="-0.0" iyz="1e-06" ixz="0.0"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.01875 -0.1629 -0.20515" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link_gripper_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+       <collision>
+        <origin xyz="-0.01875 -0.1629 -0.20515" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/left_link_gripper_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}right_link2_1">
+      <inertial>
+        <origin xyz="-0.02727565185538715 -0.00036463615065041033 -0.06351762777052061" rpy="0 0 0"/>
+        <mass value="0.4119072353618623"/>
+        <inertia ixx="0.001331" iyy="0.001382" izz="0.000168" ixy="1e-06" iyz="8e-06" ixz="-9.8e-05"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.02475 0.1525 -0.6155" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link2_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+       <collision>
+        <origin xyz="-0.02475 0.1525 -0.6155" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link2_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}right_link3_1">
+      <inertial>
+        <origin xyz="-1.209275128617e-08 -1.2656755643547513e-09 -0.026072371405695682" rpy="0 0 0"/>
+        <mass value="0.050293199431630714"/>
+        <inertia ixx="3.7e-05" iyy="2.3e-05" izz="3.4e-05" ixy="0.0" iyz="-0.0" ixz="0.0"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.00025 0.1525 -0.45775" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link3_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+       <collision>
+        <origin xyz="-0.00025 0.1525 -0.45775" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link3_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}right_link4_1">
+      <inertial>
+        <origin xyz="-0.0040709740464307306 0.018876725019776414 -0.06334059246636403" rpy="0 0 0"/>
+        <mass value="0.31397838075435874"/>
+        <inertia ixx="0.000908" iyy="0.000935" izz="0.000116" ixy="0.0" iyz="2e-06" ixz="-7.3e-05"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.00025 0.1715 -0.42625" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link4_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+       <collision>
+        <origin xyz="-0.00025 0.1715 -0.42625" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link4_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}right_link5_1">
+      <inertial>
+        <origin xyz="2.8685270933538273e-08 -1.2819240391426234e-09 -0.01798762047669228" rpy="0 0 0"/>
+        <mass value="0.02546967835110524"/>
+        <inertia ixx="1.2e-05" iyy="7e-06" izz="1.1e-05" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.00025 0.1525 -0.28615" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link5_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+       <collision>
+        <origin xyz="-0.00025 0.1525 -0.28615" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link5_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}right_link6_1">
+      <inertial>
+        <origin xyz="0.00017312522335896592 0.020213672315239545 -0.03049306440428448" rpy="0 0 0"/>
+        <mass value="0.19487379537642624"/>
+        <inertia ixx="0.000139" iyy="0.00013" izz="5.6e-05" ixy="0.0" iyz="1.1e-05" ixz="1e-06"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.00025 0.1715 -0.25465" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link6_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+       <collision>
+        <origin xyz="-0.00025 0.1715 -0.25465" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link6_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}right_link_gripper_1">
+      <inertial>
+        <origin xyz="-0.01899555242215849 -0.01843075902288205 -0.031128985762427674" rpy="0 0 0"/>
+        <mass value="0.022581338744717485"/>
+        <inertia ixx="1.9e-05" iyy="2.8e-05" izz="1.2e-05" ixy="-0.0" iyz="-1e-06" ixz="-0.0"/>
+      </inertial>
+      <visual>
+        <origin xyz="-0.01925 0.1645 -0.20515" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link_gripper_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="dark_gray"/>
+      </visual>
+       <collision>
+        <origin xyz="-0.01925 0.1645 -0.20515" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find avatar_description)/meshes/follower/right_link_gripper_1.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
     
-    <!-- link4 -->
-    <link name="${prefix}right_link4" >
-      <visual>
-        <origin xyz="0 0 ${-robot_thickness/2 - arm2_height/2}" rpy="0 0 0" />
-        <geometry>
-          <box size="${robot_thickness} ${robot_thickness} ${arm2_height}" />
-        </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="0 0 ${-robot_thickness/2 - arm2_height/2}" rpy="0 0 0" />
-        <geometry>
-          <box size="${robot_thickness} ${robot_thickness} ${arm2_height}" />
-        </geometry>
-      </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="8.0e-2" />
-        <inertia ixx="4e-5" ixy="0" ixz="0" iyy="4e-5" iyz="0" izz="8e-6" />
-      </inertial>
-    </link>
 
-     <!-- joint5 -->
-    <joint name="${prefix}right_joint5" type="revolute">
-      <parent link="${prefix}right_link4" />
-      <child link="${prefix}right_link5" />
-      <origin xyz="0 0 ${-arm2_height - robot_thickness/2}" rpy="0 0 0" />
-      <axis xyz="0 0 -1" />
-      <limit velocity="4.8" effort="1000" lower="${-pi/2}" upper="${pi/2}" />
+    <joint name="right_joint1" type="continuous">
+      <origin xyz="0.00025 -0.1025 0.6155" rpy="0 0 0"/>
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}right_link1_1"/>
+      <axis xyz="-0.0 -1.0 0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
-    <!-- link5 -->
-    <link name="${prefix}right_link5" >
-      <visual>
-        <origin xyz="0 0 ${-robot_thickness/2}" rpy="${pi/2} 0 ${pi/2}" />
-        <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
-        </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="0 0 ${-robot_thickness/2}" rpy="${pi/2} 0 ${pi/2}" />
-        <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
-        </geometry>
-      </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="1.0e-1" />
-        <inertia ixx="5e-5" ixy="0" ixz="0" iyy="5e-5" iyz="0" izz="1e-5" />
-      </inertial>
-    </link>
-
-    <!-- joint6 -->
-    <joint name="${prefix}right_joint6" type="revolute">
-      <parent link="${prefix}right_link5" />
-      <child link="${prefix}right_link6" />
-      <origin xyz="0 0 ${-robot_thickness/2}" rpy="0 0 0" />
-      <axis xyz="1 0 0" />
-      <limit velocity="4.8" effort="1000" lower="${-pi/2}" upper="${pi/2}" />
+    <joint name="right_joint2" type="continuous">
+      <origin xyz="0.0245 -0.05 0.0" rpy="0 0 0"/>
+      <parent link="${prefix}right_link1_1"/>
+      <child link="${prefix}right_link2_1"/>
+      <axis xyz="-1.0 -0.0 0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
+
+    <joint name="right_joint3" type="continuous">
+      <origin xyz="-0.0245 0.0 -0.15775" rpy="0 0 0"/>
+      <parent link="${prefix}right_link2_1"/>
+      <child link="${prefix}right_link3_1"/>
+      <axis xyz="0.0 -0.0 -1.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
+    </joint>
+
+    <joint name="right_joint4" type="continuous">
+      <origin xyz="0.0 -0.019 -0.0315" rpy="0 0 0"/>
+      <parent link="${prefix}right_link3_1"/>
+      <child link="${prefix}right_link4_1"/>
+      <axis xyz="0.0 1.0 -0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
+    </joint>
+
+    <joint name="right_joint5" type="continuous">
+      <origin xyz="0.0 0.019 -0.1401" rpy="0 0 0"/>
+      <parent link="${prefix}right_link4_1"/>
+      <child link="${prefix}right_link5_1"/>
+      <axis xyz="0.0 0.0 -1.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <dynamics damping="0.1" />
+    </joint>
+
+    <joint name="right_joint6" type="continuous">
+      <origin xyz="0.0 -0.019 -0.0315" rpy="0 0 0"/>
+      <parent link="${prefix}right_link5_1"/>
+      <child link="${prefix}right_link6_1"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
+    </joint>
+
+    <joint name="right_joint_gripper" type="continuous">
+      <origin xyz="0.019 0.007 -0.0495" rpy="0 0 0"/>
+      <parent link="${prefix}right_link6_1"/>
+      <child link="${prefix}right_link_gripper_1"/>
+      <axis xyz="1.0 -0.0 -0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
+    </joint>
+
+
+    <joint name="left_joint1" type="continuous">
+      <origin xyz="-0.00025 0.1025 0.6155" rpy="0 0 0"/>
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}left_link1_1"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <dynamics damping="0.1" />
+    </joint>
+
+    <joint name="left_joint2" type="continuous">
+      <origin xyz="0.0245 0.05 0.0" rpy="0 0 0"/>
+      <parent link="${prefix}left_link1_1"/>
+      <child link="${prefix}left_link2_1"/>
+      <axis xyz="-1.0 -0.0 -0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
+    </joint>
+
+    <joint name="left_joint3" type="continuous">
+      <origin xyz="-0.0245 0.0 -0.15775" rpy="0 0 0"/>
+      <parent link="${prefix}left_link2_1"/>
+      <child link="${prefix}left_link3_1"/>
+      <axis xyz="0.0 -0.0 -1.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
+    </joint>
+
+    <joint name="left_joint4" type="continuous">
+      <origin xyz="0.0 0.019 -0.0315" rpy="0 0 0"/>
+      <parent link="${prefix}left_link3_1"/>
+      <child link="${prefix}left_link4_1"/>
+      <axis xyz="-0.0 -1.0 0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
+    </joint>
+
+    <joint name="left_joint5" type="continuous">
+      <origin xyz="0.0 -0.019 -0.1401" rpy="0 0 0"/>
+      <parent link="${prefix}left_link4_1"/>
+      <child link="${prefix}left_link5_1"/>
+      <axis xyz="0.0 0.0 -1.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <dynamics damping="0.1" />
+    </joint>
+
+    <joint name="left_joint6" type="continuous">
+      <origin xyz="0.0 0.019 -0.0315" rpy="0 0 0"/>
+      <parent link="${prefix}left_link5_1"/>
+      <child link="${prefix}left_link6_1"/>
+      <axis xyz="-0.0 -1.0 -0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
+    </joint>
+
+    <joint name="left_joint_gripper" type="continuous">
+      <origin xyz="0.019 -0.0086 -0.0495" rpy="0 0 0"/>
+      <parent link="${prefix}left_link6_1"/>
+      <child link="${prefix}left_link_gripper_1"/>
+      <axis xyz="1.0 -0.0 -0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <dynamics damping="0.1" />
+    </joint>
+
     
-    <!-- link6 -->
-    <link name="${prefix}right_link6" >
-      <visual>
-        <origin xyz="0 0 ${-robot_thickness/2 - gripper_height/2}" rpy="0 0 0" />
-        <geometry>
-          <box size="${robot_thickness} ${robot_thickness} ${gripper_height}" />
-        </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="0 0 ${-robot_thickness/2 - gripper_height/2}" rpy="0 0 0" />
-        <geometry>
-          <box size="${robot_thickness} ${robot_thickness} ${gripper_height}" />
-        </geometry>
-      </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="8.0e-2" />
-        <inertia ixx="4e-5" ixy="0" ixz="0" iyy="4e-5" iyz="0" izz="8e-6" />
-      </inertial>
-    </link>
-
-
-    <!-- left arm -->
-    <!-- joint1 -->
-    <joint name="${prefix}left_joint1" type="revolute">
-      <parent link="${prefix}link0" />
-      <child link="${prefix}left_link1" />
-      <origin xyz="${-body_width/2} 0 ${body_height - robot_thickness/2}" rpy="0 0 0" />
-      <axis xyz="1 0 0" />
-      <limit velocity="4.8" effort="1000" lower="${-pi}" upper="${pi}" />
-      <dynamics damping="0.05" />
-    </joint>
-
-    <!-- link1 -->
-    <link name="${prefix}left_link1" >
-      <visual>
-        <origin xyz="${-robot_thickness/2} 0 0" rpy="${pi/2} 0 0" />
-        <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
-        </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="${-robot_thickness/2} 0 0" rpy="${pi/2} 0 0" />
-        <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
-        </geometry>
-      </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="1.0e-1" />
-        <inertia ixx="5e-5" ixy="0" ixz="0" iyy="5e-5" iyz="0" izz="1e-5" />
-      </inertial>
-    </link>
-
-    <!-- joint2 -->
-    <joint name="${prefix}left_joint2" type="revolute">
-      <parent link="${prefix}left_link1" />
-      <child link="${prefix}left_link2" />
-      <origin xyz="${-robot_thickness/2} 0 0" rpy="0 0 0" />
-      <axis xyz="0 1 0" />
-      <limit velocity="4.8" effort="1000" lower="${-pi/2}" upper="${pi}" />
+    <joint name="neck_joint1" type="continuous">
+      <origin xyz="0.00025 0.0194 0.6478" rpy="0 0 0"/>
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}neck_link1_1"/>
+      <axis xyz="0.0 1.0 -0.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
       <dynamics damping="0.1" />
     </joint>
 
-    <!-- link2 -->
-    <link name="${prefix}left_link2" >
-      <visual>
-        <origin xyz="0 0 ${-robot_thickness/2 - arm1_height/2}" rpy="0 0 0" />
-        <geometry>
-          <box size="${robot_thickness} ${robot_thickness} ${arm1_height}" />
-        </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="0 0 ${-robot_thickness/2 - arm1_height/2}" rpy="0 0 0" />
-        <geometry>
-          <box size="${robot_thickness} ${robot_thickness} ${arm1_height}" />
-        </geometry>
-      </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="8.0e-2" />
-        <inertia ixx="4e-5" ixy="0" ixz="0" iyy="4e-5" iyz="0" izz="8e-6" />
-      </inertial>
-    </link>
-
-    <!-- joint3 -->
-    <joint name="${prefix}left_joint3" type="revolute">
-      <parent link="${prefix}left_link2" />
-      <child link="${prefix}left_link3" />
-      <origin xyz="0 0 ${-arm1_height - robot_thickness/2}" rpy="0 0 0" />
-      <axis xyz="0 0 -1" />
-      <limit velocity="4.8" effort="1000" lower="${-pi/2}" upper="${pi/2}" />
+    <joint name="neck_joint2" type="continuous">
+      <origin xyz="0.0 -0.019 0.05975" rpy="0 0 0"/>
+      <parent link="${prefix}neck_link1_1"/>
+      <child link="${prefix}neck_link2_1"/>
+      <axis xyz="0.0 0.0 1.0"/>
+      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
       <dynamics damping="0.1" />
     </joint>
-
-    <!-- link3 -->
-    <link name="${prefix}left_link3" >
-      <visual>
-        <origin xyz="0 0 ${-robot_thickness/2}" rpy="${pi/2} 0 ${pi/2}" />
-        <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
-        </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="0 0 ${-robot_thickness/2}" rpy="${pi/2} 0 ${pi/2}" />
-        <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
-        </geometry>
-      </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="1.0e-1" />
-        <inertia ixx="5e-5" ixy="0" ixz="0" iyy="5e-5" iyz="0" izz="1e-5" />
-      </inertial>
-    </link>
-
-    <!-- joint4 -->
-    <joint name="${prefix}left_joint4" type="revolute">
-      <parent link="${prefix}left_link3" />
-      <child link="${prefix}left_link4" />
-      <origin xyz="0 0 ${-robot_thickness/2}" rpy="0 0 0" />
-      <axis xyz="1 0 0" />
-      <limit velocity="4.8" effort="1000" lower="0" upper="${pi}" />
-      <dynamics damping="0.1" />
-    </joint>
-    
-    <!-- link4 -->
-    <link name="${prefix}left_link4" >
-      <visual>
-        <origin xyz="0 0 ${-robot_thickness/2 - arm2_height/2}" rpy="0 0 0" />
-        <geometry>
-          <box size="${robot_thickness} ${robot_thickness} ${arm2_height}" />
-        </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="0 0 ${-robot_thickness/2 - arm2_height/2}" rpy="0 0 0" />
-        <geometry>
-          <box size="${robot_thickness} ${robot_thickness} ${arm2_height}" />
-        </geometry>
-      </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="8.0e-2" />
-        <inertia ixx="4e-5" ixy="0" ixz="0" iyy="4e-5" iyz="0" izz="8e-6" />
-      </inertial>
-    </link>
-
-     <!-- joint5 -->
-    <joint name="${prefix}left_joint5" type="revolute">
-      <parent link="${prefix}left_link4" />
-      <child link="${prefix}left_link5" />
-      <origin xyz="0 0 ${-arm2_height - robot_thickness/2}" rpy="0 0 0" />
-      <axis xyz="0 0 -1" />
-      <limit velocity="4.8" effort="1000" lower="${-pi/2}" upper="${pi/2}" />
-      <dynamics damping="0.1" />
-    </joint>
-
-    <!-- link5 -->
-    <link name="${prefix}left_link5" >
-      <visual>
-        <origin xyz="0 0 ${-robot_thickness/2}" rpy="${pi/2} 0 ${pi/2}" />
-        <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
-        </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="0 0 ${-robot_thickness/2}" rpy="${pi/2} 0 ${pi/2}" />
-        <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
-        </geometry>
-      </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="1.0e-1" />
-        <inertia ixx="5e-5" ixy="0" ixz="0" iyy="5e-5" iyz="0" izz="1e-5" />
-      </inertial>
-    </link>
-
-    <!-- joint6 -->
-    <joint name="${prefix}left_joint6" type="revolute">
-      <parent link="${prefix}left_link5" />
-      <child link="${prefix}left_link6" />
-      <origin xyz="0 0 ${-robot_thickness/2}" rpy="0 0 0" />
-      <axis xyz="1 0 0" />
-      <limit velocity="4.8" effort="1000" lower="${-pi/2}" upper="${pi/2}" />
-      <dynamics damping="0.1" />
-    </joint>
-    
-    <!-- link6 -->
-    <link name="${prefix}left_link6" >
-      <visual>
-        <origin xyz="0 0 ${-robot_thickness/2 - gripper_height/2}" rpy="0 0 0" />
-        <geometry>
-          <box size="${robot_thickness} ${robot_thickness} ${gripper_height}" />
-        </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="0 0 ${-robot_thickness/2 - gripper_height/2}" rpy="0 0 0" />
-        <geometry>
-          <box size="${robot_thickness} ${robot_thickness} ${gripper_height}" />
-        </geometry>
-      </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="8.0e-2" />
-        <inertia ixx="4e-5" ixy="0" ixz="0" iyy="4e-5" iyz="0" izz="8e-6" />
-      </inertial>
-    </link>
-
-
-    <!-- neck -->
-    <!-- joint1 -->
-    <joint name="${prefix}neck_joint1" type="revolute">
-      <parent link="${prefix}link0" />
-      <child link="${prefix}neck_link1" />
-      <origin xyz="0 0 ${body_height}" rpy="0 0 0" />
-      <axis xyz="1 0 0" />
-      <limit velocity="4.8" effort="1000" lower="${-pi/2}" upper="${pi/2}" />
-      <dynamics damping="0.1" />
-    </joint>
-    <!-- link1 -->
-    <link name="${prefix}neck_link1" >
-      <visual>
-        <origin xyz="0 0 ${robot_thickness/2}" rpy="0 0 0" />
-        <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
-        </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="0 0 ${robot_thickness/2}" rpy="0 0 0" />
-        <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
-        </geometry>
-      </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="1.0e-1" />
-        <inertia ixx="5e-5" ixy="0" ixz="0" iyy="5e-5" iyz="0" izz="1e-5" />
-      </inertial>
-    </link>
-
-    <!-- joint2 -->
-    <joint name="${prefix}neck_joint2" type="revolute">
-      <parent link="${prefix}neck_link1" />
-      <child link="${prefix}neck_link2" />
-      <origin xyz="0 0 ${robot_thickness}" rpy="0 0 0" />
-      <axis xyz="0 0 1" />
-      <limit velocity="4.8" effort="1000" lower="${-pi/2}" upper="${pi/2}" />
-      <dynamics damping="0.1" />
-    </joint>
-    <!-- link2 -->
-    <link name="${prefix}neck_link2" >
-      <visual>
-        <origin xyz="0 0 ${robot_thickness/2}" rpy="${pi/2} 0 ${pi/2}" />
-        <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
-        </geometry>
-        <material name="grey">
-          <color rgba="0.2 0.2 0.2 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="0 0 ${-robot_thickness/2}" rpy="${pi/2} 0 ${pi/2}" />
-        <geometry>
-          <cylinder radius="${robot_thickness/2}" length="${robot_thickness}"/>
-        </geometry>
-      </collision>
-      <inertial>
-        <origin xyz="0 0 0.05" />
-        <mass value="1.0e-1" />
-        <inertia ixx="5e-5" ixy="0" ixz="0" iyy="5e-5" iyz="0" izz="1e-5" />
-      </inertial>
-    </link>
-
-
   </xacro:macro>
 </robot>
