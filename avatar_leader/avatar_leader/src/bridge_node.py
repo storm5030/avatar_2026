@@ -9,6 +9,8 @@ from rclpy.node import Node
 from std_msgs.msg import Float64
 from sensor_msgs.msg import JointState
 from avatar_leader.plugins.filters import LowPassFilter
+from avatar_leader.plugins.calibration import Calibration
+from math import pi
 
 # 받아올 데이터의 크기 관리
 ADDR_PRESENT_POSITION = 132
@@ -103,6 +105,7 @@ class BridgeNode(Node):
         for dxl_id in self.joint_ids:
             self.lpf[dxl_id] = LowPassFilter(cutoff_hz=cutoff)
 
+        self.calibrator = Calibration()
         self.dt = 1.0 / hz
         self.timer = self.create_timer(self.dt, self.tick)
 
@@ -143,8 +146,39 @@ class BridgeNode(Node):
                     )
             rad = raw_angle_to_rad(int(raw))
 
+
+            # 필터링 적용
             rad_f = self.lpf[dxl_id].step(rad, self.dt)
+
             positions.append(float(rad_f))
+
+
+        rad_before_cal_r = positions[:4]
+        rad_before_cal_r[0] = -rad_before_cal_r[0] + pi
+        rad_before_cal_r[1] = rad_before_cal_r[1] - pi
+        rad_before_cal_r[2] = -rad_before_cal_r[2] + pi
+        rad_before_cal_r[3] = -rad_before_cal_r[3] + pi
+        rad_after_cal = self.calibrator.calibrate(rad_before_cal_r, side='right')
+        rad_after_cal[0] = -rad_before_cal_r[0] - pi
+        rad_after_cal[1] = rad_before_cal_r[1] + pi
+        rad_after_cal[2] = -rad_before_cal_r[2] - pi
+        rad_after_cal[3] = -rad_before_cal_r[3] - pi
+        positions[:4] = rad_after_cal
+
+        rad_before_cal_l = positions[7:11]
+        rad_before_cal_l[0] = rad_before_cal_l[0] - pi
+        rad_before_cal_l[1] = rad_before_cal_l[1] - pi
+        rad_before_cal_l[2] = -rad_before_cal_l[2] + pi
+        rad_before_cal_l[3] = rad_before_cal_l[3] - pi
+        rad_after_cal = self.calibrator.calibrate(rad_before_cal_l , side='left')
+        rad_after_cal[0] = rad_before_cal_l[0] + pi
+        rad_after_cal[1] = rad_before_cal_l[1] + pi
+        rad_after_cal[2] = -rad_before_cal_l[2] - pi
+        rad_after_cal[3] = rad_before_cal_l[3] + pi
+        positions[7:11] = rad_after_cal
+        
+        for i in range(len(positions)):
+            positions[i] = float(positions[i]) % (2 * math.pi)
 
         msg = JointState()
         msg.header.stamp = self.get_clock().now().to_msg()
