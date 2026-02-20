@@ -33,6 +33,25 @@ class FollowerPassthroughDriver(Node):
             self.vision_callback,
             10
         )
+
+        self.follower_joint_state_sub = self.create_subscription(
+            JointState,
+            '/joint_states',
+            self.follower_joint_state_callback,
+            10
+        )
+
+        self.neck_joint_names = ["neck_joint1", "neck_joint2"]
+        self.current_neck_position = {
+            "neck_joint1": 0.0,
+            "neck_joint2": 0.0,
+        }
+        self.has_neck_state = False
+        self.warned_no_neck_state = False
+
+        # 오차가 이 값보다 작으면 목을 움직이지 않는다 (deadband).
+        self.pitch_deadband = 0.1
+        self.yaw_deadband = 0.1
         
         self.get_logger().info('Follower Passthrough Driver Node has been started.')
 
@@ -67,20 +86,43 @@ class FollowerPassthroughDriver(Node):
         self._action_client.send_goal_async(goal_msg)
 
     def vision_callback(self, msg: Float32MultiArray):   
-        # rate = 5.0 # 각도 조절 비율 (값이 클수록 더 작은 각도로 변환)     
+        if len(msg.data) < 3:
+            self.get_logger().warn("target_angles must contain at least 3 values.")
+            return
+
+        if not self.has_neck_state:
+            if not self.warned_no_neck_state:
+                self.get_logger().warn("Neck joint state not received yet. Skipping vision command.")
+                self.warned_no_neck_state = True
+            return
+
         traj = JointTrajectory()
-        traj.joint_names = list(["neck_joint1", "neck_joint2"])
+        traj.joint_names = list(self.neck_joint_names)
         traj.points = [JointTrajectoryPoint()]
-        pitch = -msg.data[2]
-        yaw = -msg.data[1]
-        min_pitch = 0.01 
-        min_yaw = 0.05  # 최소 각도 (0.05 라디안 = 약 2.86도)
-        if abs(pitch) > min_pitch:
-            pitch = min_pitch * (pitch / abs(pitch))  
-        if abs(yaw) > min_yaw:
-            yaw = min_yaw * (yaw / abs(yaw))  
-      
-        traj.points[0].positions = [pitch, yaw]
+
+        pitch_error = -msg.data[2]
+        yaw_error = -msg.data[1]
+
+        if abs(pitch_error) < self.pitch_deadband:
+            pitch_error = 0.0
+        if abs(yaw_error) < self.yaw_deadband:
+            yaw_error = 0.0
+
+        # 입력 각도를 절대 목표가 아닌 delta로 적용한다.
+        # 너무 큰 점프를 막기 위해 callback 당 이동량을 제한한다.
+        max_pitch_delta = 0.05
+        max_yaw_delta = 0.05
+
+        pitch_delta = max(-max_pitch_delta, min(max_pitch_delta, pitch_error))
+        yaw_delta = max(-max_yaw_delta, min(max_yaw_delta, yaw_error))
+
+        current_pitch = self.current_neck_position["neck_joint1"]
+        current_yaw = self.current_neck_position["neck_joint2"]
+
+        target_pitch = current_pitch + pitch_delta
+        target_yaw = current_yaw + yaw_delta
+
+        traj.points[0].positions = [target_pitch, target_yaw]
         traj.points[0].time_from_start = Duration(sec=0, nanosec=20_000_000)  # 0.02s (50 Hz)
         
         goal_msg = FollowJointTrajectory.Goal()
@@ -88,7 +130,24 @@ class FollowerPassthroughDriver(Node):
 
         # 비동기적으로 목표 전송
         self._action_client.send_goal_async(goal_msg)
-        self.get_logger().info(f"Received vision angles: {msg.data}, sent to action server.")
+        self.get_logger().info(
+            f"Vision delta cmd: raw(pitch={pitch_error:.4f}, yaw={yaw_error:.4f}) "
+            f"-> target(pitch={target_pitch:.4f}, yaw={target_yaw:.4f})"
+        )
+
+    def follower_joint_state_callback(self, msg: JointState):
+        if not msg.name or not msg.position:
+            return
+
+        updated = False
+        for joint_name in self.neck_joint_names:
+            if joint_name in msg.name:
+                idx = msg.name.index(joint_name)
+                self.current_neck_position[joint_name] = msg.position[idx]
+                updated = True
+
+        if updated:
+            self.has_neck_state = True
         
 
 def main(args=None):
