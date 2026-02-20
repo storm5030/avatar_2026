@@ -28,30 +28,352 @@
       </gazebo>
     </xacro:macro>
 
-    <xacro:Link reference="${prefix}link0"/>
-    <xacro:Link reference="${prefix}right_link1"/>
-    <xacro:Link reference="${prefix}right_link2"/>
-    <xacro:Link reference="${prefix}right_link3"/>
-    <xacro:Link reference="${prefix}right_link4"/>
-    <xacro:Link reference="${prefix}right_link5"/>
-    <xacro:Link reference="${prefix}right_link6"/>
+    <xacro:Link reference="base_link"/>
+    <xacro:Link reference="${prefix}right_link1_1"/>
+    <xacro:Link reference="${prefix}right_link2_1"/>
+    <xacro:Link reference="${prefix}right_link3_1"/>
+    <xacro:Link reference="${prefix}right_link4_1"/>
+    <xacro:Link reference="${prefix}right_link5_1"/>
+    <xacro:Link reference="${prefix}right_link6_1"/>
+    <xacro:Link reference="${prefix}right_link_gripper_1"/>
 
-    <xacro:Link reference="${prefix}left_link1"/>
-    <xacro:Link reference="${prefix}left_link2"/>
-    <xacro:Link reference="${prefix}left_link3"/>
-    <xacro:Link reference="${prefix}left_link4"/>
-    <xacro:Link reference="${prefix}left_link5"/>
-    <xacro:Link reference="${prefix}left_link6"/>
+    <xacro:Link reference="${prefix}left_link1_1"/>
+    <xacro:Link reference="${prefix}left_link2_1"/>
+    <xacro:Link reference="${prefix}left_link3_1"/>
+    <xacro:Link reference="${prefix}left_link4_1"/>
+    <xacro:Link reference="${prefix}left_link5_1"/>
+    <xacro:Link reference="${prefix}left_link6_1"/>
+    <xacro:Link reference="${prefix}left_link_gripper_1"/>
 
-    <xacro:Link reference="${prefix}neck_link1"/>
-    <xacro:Link reference="${prefix}neck_link2"/>
+
+    <xacro:Link reference="${prefix}neck_link1_1"/>
+    <xacro:Link reference="${prefix}neck_link2_1"/>
 
     <xacro:SimpleTransmission trans="${prefix}trans1" joint="${prefix}right_joint1" actuator="${prefix}actuator1" />
     <xacro:SimpleTransmission trans="${prefix}trans2" joint="${prefix}right_joint2" actuator="${prefix}actuator2" />
-    <xacro:SimpleTransmission trans="${prefix}trans3" joint="${prefix}right_joint2" actuator="${prefix}actuator3" />
-    <xacro:SimpleTransmission trans="${prefix}trans4" joint="${prefix}right_joint2" actuator="${prefix}actuator4" />
-    <xacro:SimpleTransmission trans="${prefix}trans5" joint="${prefix}right_joint2" actuator="${prefix}actuator5" />
-    <xacro:SimpleTransmission trans="${prefix}trans6" joint="${prefix}right_joint2" actuator="${prefix}actuator6" />
+    <xacro:SimpleTransmission trans="${prefix}trans3" joint="${prefix}right_joint3" actuator="${prefix}actuator3" />
+    <xacro:SimpleTransmission trans="${prefix}trans4" joint="${prefix}right_joint4" actuator="${prefix}actuator4" />
+    <xacro:SimpleTransmission trans="${prefix}trans5" joint="${prefix}right_joint5" actuator="${prefix}actuator5" />
+    <xacro:SimpleTransmission trans="${prefix}trans6" joint="${prefix}right_joint6" actuator="${prefix}actuator6" />
+    <xacro:SimpleTransmission trans="${prefix}trans7" joint="${prefix}right_gripper_joint" actuator="${prefix}actuator7" />
+    <xacro:SimpleTransmission trans="${prefix}trans8" joint="${prefix}left_joint1" actuator="${prefix}actuator8" />
+    <xacro:SimpleTransmission trans="${prefix}trans9" joint="${prefix}left_joint2" actuator="${prefix}actuator9" />
+    <xacro:SimpleTransmission trans="${prefix}trans10" joint="${prefix}left_joint3" actuator="${prefix}actuator10" />
+    <xacro:SimpleTransmission trans="${prefix}trans11" joint="${prefix}left_joint4" actuator="${prefix}actuator11" />
+    <xacro:SimpleTransmission trans="${prefix}trans12" joint="${prefix}left_joint5" actuator="${prefix}actuator12" />
+    <xacro:SimpleTransmission trans="${prefix}trans13" joint="${prefix}left_joint6" actuator="${prefix}actuator13" />
+    <xacro:SimpleTransmission trans="${prefix}trans14" joint="${prefix}left_gripper_joint" actuator="${prefix}actuator14" />
+    <xacro:SimpleTransmission trans="${prefix}trans15" joint="${prefix}neck_joint1" actuator="${prefix}actuator15" />
+    <xacro:SimpleTransmission trans="${prefix}trans16" joint="${prefix}neck_joint2" actuator="${prefix}actuator16" />
+
+     <!-- Contact sensors for collision detection -->
+    <gazebo reference="${prefix}base_link">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      
+      <sensor name="base_link_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}base_link_collision</collision>
+        </contact>
+      </sensor>
+      <plugin filename="libignition-gazebo-touchplugin-system.so" 
+                name="ignition::gazebo::systems::TouchPlugin">
+        </plugin>
+    </gazebo>
+
+    <gazebo reference="${prefix}left_link1_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_link1_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link1_1_collision</collision>
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link1_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="right_link1_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link1_1_collision</collision>
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}neck_link1_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="neck_link1_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}neck_link1_1_collision</collision>
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}neck_link2_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="neck_link2_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}neck_link2_1_collision</collision>
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}left_link2_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_link2_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link2_1_collision</collision>
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}left_link3_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_link3_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link3_1_collision</collision>
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}left_link4_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_link4_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link4_1_collision</collision>
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}left_link5_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_link5_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link5_1_collision</collision>
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}left_link6_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_link6_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link6_1_collision</collision>
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}left_link_gripper_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="left_gripper_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}left_link_gripper_1_collision</collision>
+        </contact>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link2_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="right_link2_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link2_1_collision</collision>
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link3_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="right_link3_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link3_1_collision</collision>
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link4_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="right_link4_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link4_1_collision</collision>
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link5_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="right_link5_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link5_1_collision</collision> 
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link6_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="right_link6_1_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link6_1_collision</collision>
+        </contact>
+         
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${prefix}right_link_gripper_1">
+      <self_collide>true</self_collide>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <mu1>30.0</mu1>
+      <mu2>30.0</mu2>
+      <maxVel>1.0</maxVel>
+      <minDepth>0.001</minDepth>
+      <sensor name="right_gripper_bumper" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <contact>
+          <collision>${prefix}right_link_gripper_1_collision</collision>
+        </contact>
+      </sensor>
+      
+    </gazebo>
 
 
   </xacro:macro>

@@ -24,11 +24,12 @@ if(BUILD_TESTING)
 endif()
 
 install(DIRECTORY
-  urdf
+  urdf  
   meshes
   rviz
   ros2_control
   gazebo
+  worlds
   DESTINATION share/${PROJECT_NAME}
 )
 

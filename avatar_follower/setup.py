@@ -25,6 +25,7 @@ setup(
     entry_points={
         'console_scripts': [
             'follower_driver = avatar_follower.follower_driver:main',
+            'safety_stop = avatar_follower.stop_safety:main',
         ],
     },
 )

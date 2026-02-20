@@ -31,16 +31,23 @@ def generate_launch_description():
         output='screen'
     )
 
-    joint_state_broadcaster_spawner = Node(
-        package='controller_manager',
-        executable='spawner',
-        arguments=['joint_state_broadcaster'],
-    )
+    # joint_state_broadcaster_spawner = Node(
+    #     package='controller_manager',
+    #     executable='spawner',
+    #     arguments=['joint_state_broadcaster'],
+    # )
 
     arm_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
         arguments=['arm_controller'],
+    )
+
+    joint_state_publisher_gui_node = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui',
+        name='joint_state_publisher_gui',
+        output='screen'
     )
 
     return LaunchDescription([
@@ -53,8 +60,9 @@ def generate_launch_description():
         ),
 
         control_node,
-        joint_state_broadcaster_spawner,
+        # joint_state_broadcaster_spawner,
         arm_controller_spawner,
+        joint_state_publisher_gui_node,
 
         Node(
             package='rviz2',

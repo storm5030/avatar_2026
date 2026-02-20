@@ -25,41 +25,45 @@
 
             <param name="dynamixel_model_folder">/param/dxl_model</param>
 
-            <param name="number_of_joints">14</param>
-            <param name="number_of_transmissions">14</param>
+            <param name="number_of_joints">16</param>
+            <param name="number_of_transmissions">16</param>
             <!-- 필수: transmission <-> joint 변환 매트릭스 (2축, 1:1 항등) -->
             <param name="transmission_to_joint_matrix">
-                1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+                1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
             </param>
 
             <param name="joint_to_transmission_matrix">
-                1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+                1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
             </param>
 
             <param name="disable_torque_at_init">true</param>
@@ -115,6 +119,14 @@
         <param name="ID">16</param>
       </joint>
 
+
+      <joint name="${prefix}right_joint_gripper">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <param name="ID">17</param>
+      </joint>
+
       <!-- 왼쪽 팔 -->
       <joint name="${prefix}left_joint1">
         <command_interface name="position"/>
@@ -158,6 +170,13 @@
         <param name="ID">26</param>
       </joint>
 
+      <joint name="${prefix}left_joint_gripper">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <param name="ID">27</param>
+      </joint>
+
 
       <!-- neck joint -->
       <joint name="${prefix}neck_joint1">
@@ -166,6 +185,7 @@
         <state_interface name="velocity"/>
         <param name="ID">31</param>
       </joint>
+
       <joint name="${prefix}neck_joint2">
         <command_interface name="position"/>
         <state_interface name="position"/>
@@ -294,6 +314,26 @@
           <param name="Profile Acceleration">25</param>
         </gpio>
 
+        <gpio name="dxl17">
+          <param name="type">dxl</param>
+          <param name="ID">17</param>
+          <command_interface name="Goal Position"/>
+          <state_interface name="Present Position"/>
+          <state_interface name="Present Velocity"/>
+          <param name="Drive Mode">0</param>
+          <param name="Operating Mode">4</param>
+          <param name="Return Delay Time">0</param>
+          <param name="Min Position Limit">1024</param>
+          <param name="Max Position Limit">3140</param>
+          <param name="Min Position Limit">830</param>
+          <param name="Max Position Limit">3129</param>
+          <param name="Position P Gain">1000</param>
+          <param name="Position I Gain">0</param>
+          <param name="Position D Gain">1000</param>
+          <param name="Profile Velocity">50</param>
+          <param name="Profile Acceleration">25</param>
+        </gpio>
+
         <gpio name="dxl21">
           <param name="type">dxl</param>
           <param name="ID">21</param>
@@ -397,6 +437,26 @@
         <gpio name="dxl26">
           <param name="type">dxl</param>
           <param name="ID">26</param>
+          <command_interface name="Goal Position"/>
+          <state_interface name="Present Position"/>
+          <state_interface name="Present Velocity"/>
+          <param name="Drive Mode">4</param>
+          <param name="Operating Mode">4</param>
+          <param name="Return Delay Time">0</param>
+          <param name="Min Position Limit">1024</param>
+          <param name="Max Position Limit">3140</param>
+          <param name="Min Position Limit">830</param>
+          <param name="Max Position Limit">3129</param>
+          <param name="Position P Gain">1000</param>
+          <param name="Position I Gain">0</param>
+          <param name="Position D Gain">1000</param>
+          <param name="Profile Velocity">50</param>
+          <param name="Profile Acceleration">25</param>
+        </gpio>
+
+        <gpio name="dxl27">
+          <param name="type">dxl</param>
+          <param name="ID">27</param>
           <command_interface name="Goal Position"/>
           <state_interface name="Present Position"/>
           <state_interface name="Present Velocity"/>

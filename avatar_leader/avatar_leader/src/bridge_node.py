@@ -52,9 +52,10 @@ class BridgeNode(Node):
         cutoff = float(self.get_parameter('lpf_cutoff_hz').value)
         operation_mode = int(self.get_parameter('operation_mode').value)
 
-        self.joint_names: List[str] = ["right_joint1", "right_joint2", "right_joint3", "right_joint4", "right_joint5", "right_joint6", "right_joint7"]
+        self.joint_names: List[str] = ["right_joint1", "right_joint2", "right_joint3", "right_joint4", "right_joint5", "right_joint6",
+                                       "right_joint_gripper"]
         #self.joint_names: List[str] = ["test_1", "test_2", "test_3", "test_4", "test_5"]
-        self.joint_ids: List[int] = [11,12,13,14,15,16,17,21,22,23,24,25,26,27]
+        self.joint_ids: List[int] = [11,12,13,14,15,16,17]
         #self.joint_ids: List[int] = [1,2,3,4,5]
 
         # 다이나믹셀 자체 sdk 속 포트 핸들러 패킷 핸들러 이용

@@ -19,6 +19,7 @@
         - right_joint4
         - right_joint5
         - right_joint6
+        - right_joint_gripper
 
         - left_joint1
         - left_joint2
@@ -26,6 +27,7 @@
         - left_joint4
         - left_joint5
         - left_joint6
+        - left_joint_gripper
 
         - neck_joint1
         - neck_joint2
