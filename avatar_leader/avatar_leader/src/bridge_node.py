@@ -53,9 +53,9 @@ class BridgeNode(Node):
         operation_mode = int(self.get_parameter('operation_mode').value)
 
         self.joint_names: List[str] = ["right_joint1", "right_joint2", "right_joint3", "right_joint4", "right_joint5", "right_joint6",
-                                       "right_joint_gripper"]
+                                       "right_joint_gripper", "left_joint1", "left_joint2", "left_joint3", "left_joint4", "left_joint5", "left_joint6", "left_joint_gripper"]
         #self.joint_names: List[str] = ["test_1", "test_2", "test_3", "test_4", "test_5"]
-        self.joint_ids: List[int] = [11,12,13,14,15,16,17]
+        self.joint_ids: List[int] = [11,12,13,14,15,16,17, 21,22,23,24,25,26,27]
         #self.joint_ids: List[int] = [1,2,3,4,5]
 
         # 다이나믹셀 자체 sdk 속 포트 핸들러 패킷 핸들러 이용
@@ -144,6 +144,10 @@ class BridgeNode(Node):
                 self.get_logger().info(
                     f"[DXL] {self.joint_names[0]} pos={raw}"
                     )
+            # 어깨 관절은 모터가 반대로 돌아가도록 설치되어 있으므로 raw값 변환    
+            if (dxl_id == 12 or dxl_id == 22):
+                raw = 4096 - raw
+
             rad = raw_angle_to_rad(int(raw))
 
 
