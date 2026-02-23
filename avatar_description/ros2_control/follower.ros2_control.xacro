@@ -225,8 +225,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -245,8 +243,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -265,8 +261,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -285,8 +279,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -305,8 +297,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -325,8 +315,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -345,8 +333,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -365,8 +351,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -385,8 +369,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -405,8 +387,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -425,8 +405,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -445,8 +423,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -465,8 +441,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -486,8 +460,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -506,8 +478,6 @@
           <param name="Return Delay Time">0</param>
           <param name="Min Position Limit">1024</param>
           <param name="Max Position Limit">3140</param>
-          <param name="Min Position Limit">830</param>
-          <param name="Max Position Limit">3129</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>

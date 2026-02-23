@@ -13,12 +13,14 @@ class FollowerPassthroughDriver(Node):
     def __init__(self):
         super().__init__('follower_passthrough_driver')
 
-        # Action Client for FollowJointTrajectory
-        self._action_client = ActionClient(
-            self, 
-            FollowJointTrajectory, 
-            '/arm_controller/follow_joint_trajectory'
+        self.trajectory_pub = self.create_publisher(
+            JointTrajectory, 
+            '/leader/joint_trajectory', 
+            10
         )
+        
+        self.trajectory_pub_sim = self.create_publisher(
+                    JointTrajectory, '/arm_controller/joint_trajectory', 10) # 가제보용
 
         self.leader_sub = self.create_subscription(
             JointState,
@@ -36,10 +38,11 @@ class FollowerPassthroughDriver(Node):
 
         self.follower_joint_state_sub = self.create_subscription(
             JointState,
-            '/joint_states',
+            '/real/joint_states',
             self.follower_joint_state_callback,
             10
         )
+
 
         self.neck_joint_names = ["neck_joint1", "neck_joint2"]
         self.current_neck_position = {
@@ -56,10 +59,6 @@ class FollowerPassthroughDriver(Node):
         self.get_logger().info('Follower Passthrough Driver Node has been started.')
 
     def leader_callback(self, msg: JointState):
-        # 액션 서버가 준비되었는지 확인
-        if not self._action_client.wait_for_server(timeout_sec=0.1):
-            self.get_logger().warn('Action server not available yet. Waiting...')
-            return
 
         # JointState -> JointTrajectory 변환
         traj = JointTrajectory()
@@ -78,12 +77,11 @@ class FollowerPassthroughDriver(Node):
 
         traj.points = [point]
 
-        # 액션 목표(Goal) 생성 및 데이터 복사
-        goal_msg = FollowJointTrajectory.Goal()
-        goal_msg.trajectory = traj
+        traj.points = [point]
 
-        # 비동기적으로 목표 전송
-        self._action_client.send_goal_async(goal_msg)
+        # [수정] Goal로 감싸지 않고 바로 publish 합니다.
+        self.trajectory_pub.publish(traj)
+        self.trajectory_pub_sim.publish(traj) # 가제보용
 
     def vision_callback(self, msg: Float32MultiArray):   
         if len(msg.data) < 3:

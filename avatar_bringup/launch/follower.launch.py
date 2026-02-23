@@ -138,24 +138,27 @@ def generate_launch_description():
         'initial_positions.yaml',
     ])
 
-    # Define nodes
+    # Define nodes with namespace 'real'
     control_node = Node(
         package='controller_manager',
         executable='ros2_control_node',
+        namespace='real',  # 네임스페이스 추가
         parameters=[{'robot_description': robot_description}, controller_manager_config],
         output='both',
         condition=UnlessCondition(use_sim),
-        # 추후 remapping 제거해야 함
-        remappings=[('/arm_controller/joint_trajectory', '/leader/joint_trajectory')],
+        # 네임스페이스가 적용되었으므로 절대 경로를 사용하여 리맵핑
+        remappings=[('/real/arm_controller/joint_trajectory', '/leader/joint_trajectory')],
     )
 
     robot_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
+        namespace='real',  # 네임스페이스 추가
         arguments=[
             'arm_controller',
             'joint_state_broadcaster',
             # 'gpio_command_controller',
+            '--controller-manager', '/real/controller_manager'  # 매니저 경로 명시
         ],
         output='both',
         parameters=[{'robot_description': robot_description}],
@@ -164,6 +167,7 @@ def generate_launch_description():
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
+        namespace='real',  # 네임스페이스 추가
         parameters=[{'robot_description': robot_description, 'use_sim_time': use_sim}],
         output='both',
     )
@@ -171,6 +175,7 @@ def generate_launch_description():
     joint_trajectory_executor = Node(
         package='avatar_bringup',
         executable='joint_trajectory_executor',
+        namespace='real',  # 네임스페이스 추가
         parameters=[trajectory_params_file],
         output='both',
         condition=IfCondition(init_position),
@@ -179,6 +184,7 @@ def generate_launch_description():
     # rviz_node = Node(
     #     package='rviz2',
     #     executable='rviz2',
+    #     namespace='real',
     #     arguments=['-d', rviz_config_file],
     #     output='both',
     #     condition=IfCondition(start_rviz),
