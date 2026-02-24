@@ -26,6 +26,7 @@ setup(
         'console_scripts': [
             'follower_driver = avatar_follower.follower_driver:main',
             'safety_stop = avatar_follower.stop_safety:main',
+            'neck_vision_follower_driver = avatar_follower.neck_vision_follower_driver:main',
         ],
     },
 )
