@@ -124,7 +124,9 @@ def generate_launch_description():
     load_controllers = RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=spawn_entity,
-            on_exit=[joint_state_broadcaster, arm_controller, safety_stop],
+            on_exit=[joint_state_broadcaster, arm_controller, 
+                     safety_stop
+                    ],
         )
     )
 

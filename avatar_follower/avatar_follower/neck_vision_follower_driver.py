@@ -46,6 +46,9 @@ class NeckVisionFollowerDriver(Node):
         # 오차가 이 값보다 작으면 목을 움직이지 않는다 (deadband).
         self.pitch_deadband = 0.1
         self.yaw_deadband = 0.1
+        self.delta_smoothing_alpha = 0.25
+        self.prev_pitch_delta = 0.0
+        self.prev_yaw_delta = 0.0
         
         self.get_logger().info('Neck Vision Follower Driver Node has been started.')
 
@@ -79,6 +82,13 @@ class NeckVisionFollowerDriver(Node):
 
         pitch_delta = max(-max_pitch_delta, min(max_pitch_delta, pitch_error))
         yaw_delta = max(-max_yaw_delta, min(max_yaw_delta, yaw_error))
+
+        # 급격한 변화만 완만하게 줄여 목 움직임을 부드럽게 만든다.
+        a = self.delta_smoothing_alpha
+        pitch_delta = (a * pitch_delta) + ((1.0 - a) * self.prev_pitch_delta)
+        yaw_delta = (a * yaw_delta) + ((1.0 - a) * self.prev_yaw_delta)
+        self.prev_pitch_delta = pitch_delta
+        self.prev_yaw_delta = yaw_delta
 
         current_pitch = self.current_neck_position["neck_joint1"]
         current_yaw = self.current_neck_position["neck_joint2"]
