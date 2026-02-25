@@ -146,11 +146,13 @@ class SafetyStopNode(Node):
         # msg.contacts 리스트가 비어있지 않으면 충돌 중이라는 뜻!
         if len(msg.contacts) > 0:
             if not self.is_stopped:
-                self.get_logger().warn('충돌 발생! 로봇 정지!')
+                self.get_logger().warn('🚨 충돌 감지! 현재 위치에서 긴급 정지합니다!')
+                self.is_stopped = True
                 self.stop_robot()
-            else:
-                # 충돌이 없으면 다시 움직일 수 있는 상태로 두거나, 아무것도 안 함
-                # 중요한 건 '영구 정지' 상태에 빠지지 않게 하는 것
+        else:
+            # 🌟 3. 논리 수정: 닿은 것이 아무것도 없을 때 상태를 풀어줌
+            if self.is_stopped:
+                self.get_logger().info('충돌 해제. 다시 움직일 수 있습니다.')
                 self.is_stopped = False
 
     def stop_robot(self):
