@@ -60,7 +60,7 @@ class FollowerPassthroughDriver(Node):
         self.click_count = {name: 0 for name in self.gripper_names}
 
         self.gripper_activation_threshold = math.radians(10.0)
-        self.neck_yaw_speed = 0.1    # rad/s
+        self.neck_yaw_speed = 0.2    # rad/s
         self.neck_pitch_speed = 0.2  # rad/s
         self.last_control_time = None
         self.resync_neck_from_follower = False
