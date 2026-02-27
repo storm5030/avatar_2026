@@ -332,8 +332,8 @@
           <param name="Drive Mode">4</param>
           <param name="Operating Mode">3</param>
           <param name="Return Delay Time">0</param>
-          <param name="Min Position Limit">1024</param>
-          <param name="Max Position Limit">3140</param>
+          <param name="Min Position Limit">548</param>
+          <param name="Max Position Limit">3548</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -350,8 +350,8 @@
           <param name="Drive Mode">4</param>
           <param name="Operating Mode">3</param>
           <param name="Return Delay Time">0</param>
-          <param name="Min Position Limit">548</param>
-          <param name="Max Position Limit">3548</param>
+          <param name="Min Position Limit">1116</param>
+          <param name="Max Position Limit">2100</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -368,8 +368,8 @@
           <param name="Drive Mode">4</param>
           <param name="Operating Mode">3</param>
           <param name="Return Delay Time">0</param>
-          <param name="Min Position Limit">1116</param>
-          <param name="Max Position Limit">2100</param>
+          <param name="Min Position Limit">1024</param>
+          <param name="Max Position Limit">3072</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>
           <param name="Position D Gain">1000</param>
@@ -386,7 +386,7 @@
           <param name="Drive Mode">4</param>
           <param name="Operating Mode">3</param>
           <param name="Return Delay Time">0</param>
-          <param name="Min Position Limit">1024</param>
+          <param name="Min Position Limit">2048</param>
           <param name="Max Position Limit">3072</param>
           <param name="Position P Gain">1000</param>
           <param name="Position I Gain">0</param>

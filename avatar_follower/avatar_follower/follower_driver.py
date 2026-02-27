@@ -67,6 +67,27 @@ class FollowerPassthroughDriver(Node):
         
         self.get_logger().info('Follower Passthrough Driver Node has been started.')
 
+        # Joint command limits in radians (converted from follower DXL min/max).
+        # min: ceil to 2 decimals in deg, max: floor to 2 decimals in deg.
+        self.joint_limits = {
+            "right_joint1": (math.radians(-131.83), math.radians(131.83)),
+            "right_joint2": (math.radians(-81.91), math.radians(4.57)),
+            "right_joint3": (math.radians(-90.00), math.radians(90.00)),
+            "right_joint4": (math.radians(0.00), math.radians(90.00)),
+            "right_joint5": (math.radians(-90.00), math.radians(90.00)),
+            "right_joint6": (math.radians(-69.60), math.radians(69.60)),
+            "right_joint_gripper": (math.radians(0.00), math.radians(111.79)),
+            "left_joint1": (math.radians(-131.83), math.radians(131.83)),
+            "left_joint2": (math.radians(-4.57), math.radians(81.91)),
+            "left_joint3": (math.radians(-90.00), math.radians(90.00)),
+            "left_joint4": (math.radians(-90.00), math.radians(0.00)),
+            "left_joint5": (math.radians(-90.00), math.radians(90.00)),
+            "left_joint6": (math.radians(-69.60), math.radians(69.60)),
+            "left_joint_gripper": (math.radians(-111.79), math.radians(0.00)),
+            "neck_joint1": (math.radians(-29.17), math.radians(29.17)),
+            "neck_joint2": (math.radians(-43.94), math.radians(43.94)),
+        }
+
     def leader_callback(self, msg: JointState):
         right_abs = self._extract_gripper_abs(msg, "right_joint_gripper")
         left_abs = self._extract_gripper_abs(msg, "left_joint_gripper")
@@ -109,6 +130,8 @@ class FollowerPassthroughDriver(Node):
             else:
                 target = joint_pos - math.pi  # 180도 오프셋 적용
 
+            target = self._clamp_joint_target(joint_name, target)
+
             point.positions.append(target)
 
         if self.control_mode != self.MODE_GRIPPER and self.has_neck_state:
@@ -129,6 +152,7 @@ class FollowerPassthroughDriver(Node):
                 if base is None:
                     base = self.current_neck_position[neck_joint]
                 target = base + neck_delta
+                target = self._clamp_joint_target(neck_joint, target)
                 self.commanded_neck_position[neck_joint] = target
                 traj.joint_names.append(neck_joint)
                 point.positions.append(target)
@@ -147,6 +171,13 @@ class FollowerPassthroughDriver(Node):
         if angle is None or abs(angle) < self.gripper_activation_threshold:
             return 0.0
         return 1.0
+
+    def _clamp_joint_target(self, joint_name: str, target: float) -> float:
+        limits = self.joint_limits.get(joint_name)
+        if limits is None:
+            return target
+        lower, upper = limits
+        return max(lower, min(upper, target))
 
     # 그리퍼 각도를 절대값으로 추출하여 초기값에서의 delta로 반환. 그리퍼 클릭 감지에도 사용.
     def _extract_gripper_abs(self, msg: JointState, joint_name: str):

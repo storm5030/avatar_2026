@@ -377,7 +377,7 @@
       <parent link="${prefix}base_link"/>
       <child link="${prefix}right_link1_1"/>
       <axis xyz="-0.0 -1.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.7323888889}" upper="${pi*0.7323888889}" />
       <dynamics damping="0.1" />
     </joint>
 
@@ -386,7 +386,7 @@
       <parent link="${prefix}right_link1_1"/>
       <child link="${prefix}right_link2_1"/>
       <axis xyz="1.0 -0.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.4550555556}" upper="${pi*0.0253888889}" />
       <dynamics damping="0.1" />
     </joint>
 
@@ -395,7 +395,7 @@
       <parent link="${prefix}right_link2_1"/>
       <child link="${prefix}right_link3_1"/>
       <axis xyz="0.0 -0.0 -1.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
       <dynamics damping="0.1" />
     </joint>
 
@@ -404,7 +404,7 @@
       <parent link="${prefix}right_link3_1"/>
       <child link="${prefix}right_link4_1"/>
       <axis xyz="0.0 -1.0 -0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.0}" upper="${pi*0.5}" />
       <dynamics damping="0.1" />
     </joint>
 
@@ -422,7 +422,7 @@
       <parent link="${prefix}right_link5_1"/>
       <child link="${prefix}right_link6_1"/>
       <axis xyz="0.0 -1.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.389}" upper="${pi*0.389}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.3866666667}" upper="${pi*0.3866666667}" />
       <dynamics damping="0.1" />
     </joint>
 
@@ -431,7 +431,7 @@
       <parent link="${prefix}right_link6_1"/>
       <child link="${prefix}right_link_gripper_1"/>
       <axis xyz="1.0 -0.0 -0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.0}" upper="${pi*0.6210555556}" />
       <dynamics damping="0.1" />
     </joint>
 
@@ -441,7 +441,7 @@
       <parent link="${prefix}base_link"/>
       <child link="${prefix}left_link1_1"/>
       <axis xyz="0.0 1.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.7323888889}" upper="${pi*0.7323888889}" />
       <dynamics damping="0.1" />
     </joint>
 
@@ -450,7 +450,7 @@
       <parent link="${prefix}left_link1_1"/>
       <child link="${prefix}left_link2_1"/>
       <axis xyz="1.0 -0.0 -0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.0253888889}" upper="${pi*0.4550555556}" />
       <dynamics damping="0.1" />
     </joint>
 
@@ -459,7 +459,7 @@
       <parent link="${prefix}left_link2_1"/>
       <child link="${prefix}left_link3_1"/>
       <axis xyz="0.0 -0.0 -1.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
       <dynamics damping="0.1" />
     </joint>
 
@@ -468,7 +468,7 @@
       <parent link="${prefix}left_link3_1"/>
       <child link="${prefix}left_link4_1"/>
       <axis xyz="-0.0 1.0 0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.0}" />
       <dynamics damping="0.1" />
     </joint>
 
@@ -486,7 +486,7 @@
       <parent link="${prefix}left_link5_1"/>
       <child link="${prefix}left_link6_1"/>
       <axis xyz="-0.0 1.0 -0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.389}" upper="${pi*0.389}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.3866666667}" upper="${pi*0.3866666667}" />
       <dynamics damping="0.1" />
     </joint>
 
@@ -495,7 +495,7 @@
       <parent link="${prefix}left_link6_1"/>
       <child link="${prefix}left_link_gripper_1"/>
       <axis xyz="1.0 -0.0 -0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.6210555556}" upper="${pi*0.0}" />
       <dynamics damping="0.1" />
     </joint>
 
@@ -505,7 +505,7 @@
       <parent link="${prefix}base_link"/>
       <child link="${prefix}neck_link1_1"/>
       <axis xyz="0.0 1.0 -0.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*2.0}" upper="${pi*2.0}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.1620555556}" upper="${pi*0.1620555556}" />
       <dynamics damping="0.1" />
     </joint>
 
@@ -514,7 +514,7 @@
       <parent link="${prefix}neck_link1_1"/>
       <child link="${prefix}neck_link2_1"/>
       <axis xyz="0.0 0.0 1.0"/>
-      <limit velocity="4.8" effort="30" lower="${-pi*0.5}" upper="${pi*0.5}" />
+      <limit velocity="4.8" effort="30" lower="${-pi*0.2441111111}" upper="${pi*0.2441111111}" />
       <dynamics damping="0.1" />
     </joint>
   </xacro:macro>
